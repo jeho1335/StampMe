@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">StampMe</string>
+
+    <!-- Common Strings -->
+
+    <!-- Toast Messages -->
+    <string name="toast_login_success">로그인 성공</string>
+    <string name="toast_login_failed">로그인 실패</string>
+    <string name="toast_register_success">가입 성공</string>
+    <string name="toast_register_failed">가입 실패</string>
+</resources>
