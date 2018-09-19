@@ -1,3 +1,5 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.jhmk.stampme.Module.DataBase
 
 import android.content.Context
@@ -13,7 +15,7 @@ object PreferencesManager {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
         editor.putString(ConstVariables.PREF_KEY_USER_ID, id)
-        editor.commit()
+        editor.apply()
     }
 
     fun saveUserPw(context: Context, pw: String) {
@@ -21,7 +23,7 @@ object PreferencesManager {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
         editor.putString(ConstVariables.PREF_KEY_USER_PW, pw)
-        editor.commit()
+        editor.apply()
     }
 
     fun loadUserId(context: Context): String {

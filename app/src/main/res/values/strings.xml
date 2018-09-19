@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">StampMe</string>
 
+    <!-- Login Fragemnt -->
+    <string name="string_edtxt_hint_id">아이디를 입력해주세요</string>
+    <string name="string_edtxt_hint_pw">비밀번호를 입력해주세요</string>
+    <string name="string_login">로그인</string>
+    <string name="string_register">회원가입</string>
+
     <!-- Common Strings -->
 
     <!-- Toast Messages -->
-    <string name="toast_login_success">로그인 성공</string>
-    <string name="toast_login_failed">로그인 실패</string>
-    <string name="toast_register_success">가입 성공</string>
-    <string name="toast_register_failed">가입 실패</string>
+    <string name="toast_login_success">환영합니다.</string>
+    <string name="toast_login_failed">로그인에 실패했어요.</string>
+    <string name="toast_register_success">서울지킴이가 되신걸 환영합니다.</string>
+    <string name="toast_register_failed">이미 다른 지킴이께서 이 아이디를 사용중이에요.</string>
 </resources>

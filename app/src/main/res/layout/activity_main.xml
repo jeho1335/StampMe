@@ -26,9 +26,9 @@
                     android:id="@+id/img_drawer_icon"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_centerVertical="true"
                     android:background="@android:color/white" />
             </RelativeLayout>
 
@@ -49,14 +49,14 @@
             android:paddingTop="100dp">
 
             <TextView
-                android:id="@+id/textview_drawer_home"
+                android:id="@+id/txt_drawer_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TEXT_1"
                 android:textSize="19sp" />
 
             <TextView
-                android:id="@+id/textview_drawer_settings"
+                android:id="@+id/txt_drawer_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -64,7 +64,7 @@
                 android:textSize="19sp" />
 
             <TextView
-                android:id="@+id/textview_drawer_license"
+                android:id="@+id/txt_drawer_license"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"

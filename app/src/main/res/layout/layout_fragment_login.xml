@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Main.MainActivity">
-
-    <EditText
-        android:id="@+id/test_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:hint="Enter your ID" />
-
-    <EditText
-        android:id="@+id/test_pw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/test_id"
-        android:layout_centerHorizontal="true"
-        android:hint="Enter yout PASSWORD" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/test_pw"
-        android:gravity="center">
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/test_login"
+        <EditText
+            android:id="@+id/edtxt_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="LOGIN" />
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/string_edtxt_hint_id" />
 
-        <Button
-            android:id="@+id/test_register"
+        <EditText
+            android:id="@+id/edtxt_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="REGISTER" />
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/string_edtxt_hint_pw" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/string_login" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/string_register" />
+        </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>
