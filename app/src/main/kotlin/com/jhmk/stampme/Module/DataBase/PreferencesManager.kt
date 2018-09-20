@@ -5,7 +5,7 @@ package com.jhmk.stampme.Module.DataBase
 import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
-import com.jhmk.stampme.Module.Utils.ConstVariables
+import com.jhmk.stampme.Model.ConstVariables
 
 object PreferencesManager {
     val TAG = this.javaClass.simpleName

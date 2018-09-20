@@ -18,11 +18,13 @@ class MainPresenter(view: Main.view) : Main.presenter {
         Log.d(TAG, "##### reuqestLogin ##### id : ${user.userId} pw : ${user.userPw}")
         DataBaseReference.mUsersDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
+                Log.d(TAG, "##### reuqestLogin ##### onCancelled")
                 DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
                 mView.onResultLogin(false, R.string.toast_login_failed, user)
             }
 
             override fun onDataChange(dataSnapShot: DataSnapshot) {
+                Log.d(TAG, "##### reuqestLogin ##### onDataChange")
                 var child = dataSnapShot.children.iterator()
 
                 while (child.hasNext()) {
@@ -45,11 +47,13 @@ class MainPresenter(view: Main.view) : Main.presenter {
         Log.d(TAG, "##### requestRegister ##### id : ${user.userId} pw : ${user.userPw}")
         DataBaseReference.mUsersDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
+                Log.d(TAG, "##### requestRegister ##### onCancelled")
                 DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
                 mView.onResultRegister(false, R.string.toast_register_failed)
             }
 
             override fun onDataChange(dataSnapShot: DataSnapshot) {
+                Log.d(TAG, "##### requestRegister ##### onDataChange")
                 var child = dataSnapShot.children.iterator()
 
                 while (child.hasNext()) {

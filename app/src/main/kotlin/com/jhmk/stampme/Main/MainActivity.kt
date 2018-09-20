@@ -6,13 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import com.jhmk.stampme.Model.GeneralUser
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
 import com.jhmk.stampme.Module.Login.LoginFragment
 import com.jhmk.stampme.Module.MyInfo.MyInfoFragment
-import com.jhmk.stampme.Module.Utils.ConstVariables
-import com.jhmk.stampme.Module.Utils.EventBusObject
+import com.jhmk.stampme.Model.ConstVariables
+import com.jhmk.stampme.Model.EventBusObject
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
@@ -100,6 +99,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
     }
 
     fun handleFragment(state: Int) {
+        Log.d(TAG, "##### handleFragment #####")
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         when (state) {
@@ -124,8 +124,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             }
         }
         ft.commit()
-        Log.d(TAG, "##### handleFragment #####")
-
     }
 
     @Subscribe

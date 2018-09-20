@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jhmk.stampme.Model.User
-import com.jhmk.stampme.Module.Utils.ConstVariables
+import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_fragment_login.*
 

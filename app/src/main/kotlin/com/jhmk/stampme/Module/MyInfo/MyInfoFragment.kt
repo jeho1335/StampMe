@@ -1,6 +1,5 @@
 package com.jhmk.stampme.Module.MyInfo
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jhmk.stampme.Model.Stamps
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_fragment_myinfo.*
@@ -25,6 +25,7 @@ class MyInfoFragment : Fragment(), MyInfo.view {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        Log.d(TAG, "##### onActivityCreated #####")
         super.onActivityCreated(savedInstanceState)
         initializeUi()
     }
@@ -32,6 +33,7 @@ class MyInfoFragment : Fragment(), MyInfo.view {
     fun initializeUi() {
         Log.d(TAG, "##### initializeUi ##### userId : ${mCurrentUser.userId}")
         mPresenter.requestMakeBarcode(mCurrentUser)
+        mPresenter.requestGetMyStamp(mCurrentUser)
     }
 
     override fun onResultMakeBarcode(user: User, bitmap: Bitmap?) {
@@ -41,5 +43,14 @@ class MyInfoFragment : Fragment(), MyInfo.view {
         }
         txt_info_id.setText(user.userId)
         txt_info_name.setText(user.userName)
+    }
+
+    override fun onResultGetMyStamp(user: User, resultList: MutableList<Stamps?>?) {
+        Log.d(TAG, "##### onResultGetMyStamp #####")
+        if (resultList != null) {
+            for ((index, value) in resultList.withIndex()) {
+                Log.d(TAG, "stampSource : ${value?.stampSource} stampReason : ${value?.stampReason} ")
+            }
+        }
     }
 }
