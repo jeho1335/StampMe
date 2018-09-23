@@ -6,35 +6,47 @@ import android.content.Context
 import android.preference.PreferenceManager
 import android.util.Log
 import com.jhmk.stampme.Model.ConstVariables
+import com.jhmk.stampme.Model.User
 
 object PreferencesManager {
     val TAG = this.javaClass.simpleName
 
-    fun saveUserId(context: Context, id: String) {
-        Log.d(TAG, "##### saveUserId #####")
+    fun saveUserInfo(context: Context, user: User): Boolean {
+        Log.d(TAG, "##### saveUserInfo ##### id : ${user.userId}")
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
-        editor.putString(ConstVariables.PREF_KEY_USER_ID, id)
-        editor.apply()
+        return try {
+            editor.putString(ConstVariables.PREF_KEY_USER_ID, user.userId)
+            editor.putString(ConstVariables.PREF_KEY_USER_PW, user.userPw)
+            editor.apply()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 
-    fun saveUserPw(context: Context, pw: String) {
-        Log.d(TAG, "##### saveUserPw #####")
+    fun loadUserInfo(context: Context): User {
+        Log.d(TAG, "##### loadUserInfo #####")
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val id = sharedPreferences.getString(ConstVariables.PREF_KEY_USER_ID, "")
+        val pw = sharedPreferences.getString(ConstVariables.PREF_KEY_USER_PW, "")
+        val user = User(id, pw)
+        return user
+    }
+
+    fun deleteUserInfo(context: Context, user: User): Boolean {
+        Log.d(TAG, "##### requestDeleteUserInfo ##### id : ${user.userId}")
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sharedPreferences.edit()
-        editor.putString(ConstVariables.PREF_KEY_USER_PW, pw)
-        editor.apply()
-    }
-
-    fun loadUserId(context: Context): String {
-        Log.d(TAG, "##### loadUserId #####")
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString(ConstVariables.PREF_KEY_USER_ID, "")
-    }
-
-    fun loadUserPw(context: Context): String {
-        Log.d(TAG, "##### loadUserPW #####")
-        val sharedPreferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferenceManager.getString(ConstVariables.PREF_KEY_USER_PW, "")
+        return try {
+            editor.remove(ConstVariables.PREF_KEY_USER_ID)
+            editor.remove(ConstVariables.PREF_KEY_USER_PW)
+            editor.apply()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 }

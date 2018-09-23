@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.layout_fragment_myinfo.*
 
 class MyInfoFragment : Fragment(), MyInfo.view {
     val TAG = this.javaClass.simpleName
-    lateinit var mCurrentUser: User
-    lateinit var mPresenter: MyInfo.presenter
+    private lateinit var mCurrentUser: User
+    private lateinit var mPresenter: MyInfo.presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "##### onCreateView #####")

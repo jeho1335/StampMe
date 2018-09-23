@@ -13,7 +13,7 @@ import java.util.*
 
 class MyInfoPresenter(view: MyInfo.view) : MyInfo.presenter {
     val TAG = this.javaClass.simpleName
-    val mView = view
+    private val mView = view
 
     override fun requestMakeBarcode(user: User) {
         Log.d(TAG, "##### requestMakeBarcode #####")

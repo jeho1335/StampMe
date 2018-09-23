@@ -13,8 +13,7 @@ import kotlinx.android.synthetic.main.layout_fragment_login.*
 
 class LoginFragment : Fragment(), View.OnClickListener {
     val TAG = this.javaClass.simpleName
-
-    lateinit var mPresenter: Login.presenter
+    private lateinit var mPresenter: Login.presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "##### onCreateView #####")
@@ -37,7 +36,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         Log.d(TAG, "##### onClick #####")
         when (v.id) {
-            btn_login.id -> mPresenter.requestLogin(User(edtxt_id.text.toString(), edtxt_pw.text.toString()))
+            btn_login.id -> mPresenter.requestLogin(User(edtxt_id.text.toString(), edtxt_pw.text.toString(), "", "", ConstVariables.USER_TYPE_GENERAL))
             btn_register.id -> mPresenter.requestRegister(User(edtxt_id.text.toString(), edtxt_pw.text.toString(), "", "", ConstVariables.USER_TYPE_GENERAL))
         }
     }

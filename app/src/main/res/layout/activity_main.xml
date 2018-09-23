@@ -49,10 +49,10 @@
             android:paddingTop="100dp">
 
             <TextView
-                android:id="@+id/txt_drawer_home"
+                android:id="@+id/txt_drawer_myinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TEXT_1"
+                android:text="txt_drawer_myinfo"
                 android:textSize="19sp" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="TEXT_2"
+                android:text="txt_drawer_settings"
                 android:textSize="19sp" />
 
             <TextView
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="TEXT_3"
+                android:text="txt_drawer_license"
                 android:textSize="19sp" />
         </LinearLayout>
     </android.support.v4.widget.DrawerLayout>

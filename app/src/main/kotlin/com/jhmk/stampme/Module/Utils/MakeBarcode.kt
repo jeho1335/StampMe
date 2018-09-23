@@ -9,8 +9,8 @@ import com.google.zxing.qrcode.QRCodeWriter
 
 object MakeBarcode {
     val TAG = this.javaClass.simpleName
-    val WIDTH = 400
-    val HEIGHT = 400
+    private val WIDTH = 400
+    private val HEIGHT = 400
 
     fun getQRCode(value: String): Bitmap? {
         Log.d(TAG, "##### getQRCode ##### value : $value")

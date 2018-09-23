@@ -7,11 +7,17 @@
     <string name="string_login">로그인</string>
     <string name="string_register">회원가입</string>
 
-    <!-- Common Strings -->
+    <!-- Settings Fragment -->
+    <string name="string_logout">로그아웃</string>
 
     <!-- Toast Messages -->
     <string name="toast_login_success">환영합니다.</string>
     <string name="toast_login_failed">로그인에 실패했어요.</string>
     <string name="toast_register_success">서울지킴이가 되신걸 환영합니다.</string>
     <string name="toast_register_failed">이미 다른 지킴이께서 이 아이디를 사용중이에요.</string>
+    <string name="toast_logout_success">로그아웃 되었습니다.</string>
+    <string name="toast_logout_failed">로그아웃에 실패하였습니다.</string>
+
+    <!-- Alert Messages -->
+    <string name="alert_logout_title">로그아웃 하시겠어요?</string>
 </resources>

@@ -12,7 +12,7 @@ import com.jhmk.stampme.R
 
 class MainPresenter(view: Main.view) : Main.presenter {
     val TAG = this.javaClass.simpleName
-    val mView = view
+    private val mView = view
 
     override fun requestLogin(user: User) {
         Log.d(TAG, "##### reuqestLogin ##### id : ${user.userId} pw : ${user.userPw}")
@@ -49,7 +49,7 @@ class MainPresenter(view: Main.view) : Main.presenter {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(TAG, "##### requestRegister ##### onCancelled")
                 DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
-                mView.onResultRegister(false, R.string.toast_register_failed)
+                mView.onResultRegister(false, R.string.toast_register_failed, user)
             }
 
             override fun onDataChange(dataSnapShot: DataSnapshot) {
@@ -58,26 +58,27 @@ class MainPresenter(view: Main.view) : Main.presenter {
 
                 while (child.hasNext()) {
                     if (child.next().key.equals(user.userId)) {
-                        mView.onResultRegister(false, R.string.toast_register_failed)
+                        mView.onResultRegister(false, R.string.toast_register_failed, user)
                         DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
                         return
                     }
                 }
                 DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userPw").setValue(user.userPw)
                 DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userStamp").setValue(0)
-                mView.onResultRegister(false, R.string.toast_register_success)
+                mView.onResultRegister(true, R.string.toast_register_success, user)
                 DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
             }
         })
     }
 
-    override fun saveUserId(context: Context, id: String) {
-        Log.d(TAG, "##### saveUserId ##### id : $id")
-        PreferencesManager.saveUserId(context, id)
+    override fun requestSaveUserInfo(context: Context, user: User) {
+        Log.d(TAG, "##### requestSaveUserInfo ##### id : ${user.userId}")
+        PreferencesManager.saveUserInfo(context, user)
     }
 
-    override fun saveUserPassword(context: Context, pw: String) {
-        Log.d(TAG, "##### saveUserPassword ##### id : $pw")
-        PreferencesManager.saveUserPw(context, pw)
+    override fun requestDeleteUserInfo(context: Context, user: User) {
+        Log.d(TAG, "##### requestDeleteUserInfo ##### id : ${user.userId}")
+        PreferencesManager.deleteUserInfo(context, user)
+        mView.onResultLogout(PreferencesManager.deleteUserInfo(context, user), R.string.string_logout)
     }
 }
