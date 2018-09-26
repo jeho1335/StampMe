@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_app_theme">#FFBCBCBC</color>
+    <color name="color_app_theme">#FFFFFFFF</color>
+    <color name="color_white">#FFFFFFFF</color>
+    <color name="color_outline">#FFE8E8E8</color>
+
+    <!-- Toolbar-->
+    <color name="color_toolbar_title">#FF353535</color>
+
+    <!-- Shops Item -->
+    <color name="color_shops_name">#FF4F4F4F</color>
+    <color name="color_shops_sub_name">#FFB1B1B1</color>
+    <color name="color_shops_distance">#FFB1B1B1</color>
 </resources>

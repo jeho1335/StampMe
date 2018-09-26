@@ -14,8 +14,8 @@ class LoginPresenter : Login.presenter {
         EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_REQUELST_LOGIN, user as Any))
     }
 
-    override fun requestRegister(user : User) {
-        Log.d(TAG, "##### requestRegister ##### id : ${user.userId} pw : #pw")
-        EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_REQUELST_REGISTER, user as Any))
+    override fun requestRegister() {
+        Log.d(TAG, "##### requestRegister #####")
+        EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_SHOW_REGISTER))
     }
 }

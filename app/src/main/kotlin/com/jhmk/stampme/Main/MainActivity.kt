@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.EventBusObject
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
+import com.jhmk.stampme.Module.Home.HomeFragment
 import com.jhmk.stampme.Module.Login.LoginFragment
 import com.jhmk.stampme.Module.MyInfo.MyInfoFragment
+import com.jhmk.stampme.Module.Register.RegisterFragment
 import com.jhmk.stampme.Module.Settings.SettingsFragment
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,13 +20,11 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.toast
 
+
 class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
     val TAG = this.javaClass.simpleName
     private lateinit var mPresenter: MainPresenter
     private lateinit var mContentView: View
-    private lateinit var mLoginFragment: Fragment
-    private lateinit var mMyinfoFragment: Fragment
-    private lateinit var mSettingsFragment: Fragment
     private lateinit var mCurrentUser: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,30 +47,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
 
     fun initializeUI() {
         Log.d(TAG, "##### initializeUI #####")
-        img_drawer_icon.setOnClickListener(this)
-        txt_drawer_myinfo.setOnClickListener(this)
-        txt_drawer_settings.setOnClickListener(this)
-        mContentView = (layout_content as View)
-        mLoginFragment = LoginFragment()
-        mMyinfoFragment = MyInfoFragment()
-        mSettingsFragment = SettingsFragment()
+        img_main_tab_1.setOnClickListener(this)
+        img_main_tab_2.setOnClickListener(this)
+        img_main_tab_3.setOnClickListener(this)
+        mContentView = (layout_main_content as View)
     }
 
     override fun onClick(v: View) {
         Log.d(TAG, "##### onClick #####")
         when (v.id) {
-            img_drawer_icon.id -> {
-                if (layout_drawer.isDrawerOpen(Gravity.LEFT)) {
-                    layout_drawer.closeDrawer(Gravity.LEFT)
-                } else {
-                    layout_drawer.openDrawer(Gravity.LEFT)
+
+            img_main_tab_1.id, img_main_tab_2.id, img_main_tab_3.id -> {
+                try {
+                    handleFragment(v.id, mCurrentUser)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            }
-            txt_drawer_myinfo.id, txt_drawer_settings.id -> {
-                if (layout_drawer.isDrawerOpen(Gravity.LEFT)) {
-                    layout_drawer.closeDrawer(Gravity.LEFT)
-                }
-                handleFragment(v.id, mCurrentUser)
             }
 
         }
@@ -83,9 +74,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         if (result) {
             mCurrentUser = user
             mPresenter.requestSaveUserInfo(this, user)
-            if (user.userType == ConstVariables.USER_TYPE_GENERAL) {
-                handleFragment(txt_drawer_myinfo.id, user)
-            } else if (user.userType == ConstVariables.USER_TYPE_MANAGER) {
+            if (user.userType == ConstVariables.USER_TYPE_BUYER) {
+                handleFragment(img_main_tab_2.id, user)
+            } else if (user.userType == ConstVariables.USER_TYPE_SELLER) {
             }
         } else {
             handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, user)
@@ -98,9 +89,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         toast(resources.getString(msg))
         if (result) {
             mPresenter.requestSaveUserInfo(this, user)
-            if (user.userType == ConstVariables.USER_TYPE_GENERAL) {
-                handleFragment(txt_drawer_myinfo.id, user)
-            } else if (user.userType == ConstVariables.USER_TYPE_MANAGER) {
+            if (user.userType == ConstVariables.USER_TYPE_BUYER) {
+                handleFragment(img_main_tab_2.id, user)
+            } else if (user.userType == ConstVariables.USER_TYPE_SELLER) {
             }
         } else {
             handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, user)
@@ -123,19 +114,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         if (loadedUser.userId == "") {
             handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, null)
         } else {
-            mPresenter.requestLogin(User(loadedUser.userId, loadedUser.userPw, "", "", ConstVariables.USER_TYPE_GENERAL))
+            mPresenter.requestLogin(User(loadedUser.userId, loadedUser.userPw))
         }
     }
 
     fun handleFragment(state: Int, user: User?) {
+        Log.d(TAG, "##### handleFragment #####")
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         var fr = Fragment()
         ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 
         when (state) {
-            ConstVariables.SHOW_FRAGMENT_LOGIN -> fr = LoginFragment()
-            txt_drawer_myinfo.id -> {
+            ConstVariables.SHOW_FRAGMENT_LOGIN -> {
+                layout_main_tab.visibility = View.GONE
+                layout_main_toolbar.visibility = View.GONE
+                fr = LoginFragment()
+            }
+            ConstVariables.SHOW_FRAGMENT_REGISTER -> {
+                layout_main_tab.visibility = View.GONE
+                layout_main_toolbar.visibility = View.VISIBLE
+                fr = RegisterFragment()
+            }
+            img_main_tab_1.id -> {
+                layout_main_tab.visibility = View.VISIBLE
+                layout_main_toolbar.visibility = View.VISIBLE
                 fr = MyInfoFragment()
                 if (user != null) {
                     val bundle = Bundle()
@@ -143,12 +146,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
                     fr.arguments = bundle
                 }
             }
-            txt_drawer_settings.id -> {
+            img_main_tab_2.id -> {
+                layout_main_tab.visibility = View.VISIBLE
+                layout_main_toolbar.visibility = View.VISIBLE
+                fr = HomeFragment()
+            }
+            img_main_tab_3.id -> {
+                layout_main_tab.visibility = View.VISIBLE
+                layout_main_toolbar.visibility = View.VISIBLE
                 fr = SettingsFragment()
                 val bundle = Bundle()
                 bundle.putSerializable("UserItem", user)
                 fr.arguments = bundle
-
             }
         }
 
@@ -157,6 +166,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         } else {
             ft.add(mContentView.id, fr, fr.javaClass.simpleName)
         }
+
 
         ft.commit()
     }
@@ -168,6 +178,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             ConstVariables.EVENTBUS_REQUELST_LOGIN -> mPresenter.requestLogin(obj.val1 as User)
             ConstVariables.EVENTBUS_REQUELST_REGISTER -> mPresenter.requestRegister(obj.val1 as User)
             ConstVariables.EVENTBUS_REQUEST_LOGOUT -> mPresenter.requestDeleteUserInfo(this, obj.val1 as User)
+            ConstVariables.EVENTBUS_SHOW_REGISTER -> handleFragment(ConstVariables.SHOW_FRAGMENT_REGISTER, null)
+            ConstVariables.EVENTBUS_CHANGE_TOOLBAR -> txt_title_main_toolbar.text = obj.val1 as String
         }
     }
 }

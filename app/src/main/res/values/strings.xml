@@ -1,9 +1,18 @@
 <resources>
     <string name="app_name">StampMe</string>
 
+    <!-- Toolbar -->
+    <string name="string_title_create_account">Create Account</string>
+    <string name="string_title_set_up_profile">Set up Profile</string>
+    <string name="string_title_nearby_shops">Nearby Shops</string>
+
     <!-- Login Fragemnt -->
-    <string name="string_edtxt_hint_id">아이디를 입력해주세요</string>
-    <string name="string_edtxt_hint_pw">비밀번호를 입력해주세요</string>
+    <string name="string_edtxt_hint_id">Email ID</string>
+    <string name="string_edtxt_hint_pw">Password</string>
+    <string name="string_edtxt_hint_confirm_pw">Confirm Password</string>
+    <string name="string_edtxt_hint_fullname">Full Name</string>
+    <string name="string_edtxt_hint_gender">Phone Number</string>
+    <string name="string_edtxt_hint_location">Location</string>
     <string name="string_login">로그인</string>
     <string name="string_register">회원가입</string>
 
@@ -13,11 +22,16 @@
     <!-- Toast Messages -->
     <string name="toast_login_success">환영합니다.</string>
     <string name="toast_login_failed">로그인에 실패했어요.</string>
+    <string name="toast_register_failed">정보를 올바르게 입력해주세요.</string>
     <string name="toast_register_success">서울지킴이가 되신걸 환영합니다.</string>
-    <string name="toast_register_failed">이미 다른 지킴이께서 이 아이디를 사용중이에요.</string>
+    <string name="toast_register_duplicate_failed">이미 다른 지킴이께서 이 아이디를 사용중이에요.</string>
     <string name="toast_logout_success">로그아웃 되었습니다.</string>
     <string name="toast_logout_failed">로그아웃에 실패하였습니다.</string>
 
     <!-- Alert Messages -->
     <string name="alert_logout_title">로그아웃 하시겠어요?</string>
+    <string name="alert_require_gps">GPS 사용 권한이 필요해요.</string>
+    <string name="alert_denied_location">현재 위치를 가져올 수 없어요</string>
+    <string name="alert_wait_location">현재 위치를 업데이트 중이에요</string>
+
 </resources>

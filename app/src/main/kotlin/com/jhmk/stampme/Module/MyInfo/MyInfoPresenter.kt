@@ -17,8 +17,8 @@ class MyInfoPresenter(view: MyInfo.view) : MyInfo.presenter {
 
     override fun requestMakeBarcode(user: User) {
         Log.d(TAG, "##### requestMakeBarcode #####")
-        var gson = Gson()
-        var jsonObject = gson.toJson(user)
+        val gson = Gson()
+        val jsonObject = gson.toJson(user)
         mView.onResultMakeBarcode(user, MakeBarcode.getQRCode(jsonObject))
     }
 

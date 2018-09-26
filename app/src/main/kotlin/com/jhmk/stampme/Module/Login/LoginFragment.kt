@@ -36,8 +36,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         Log.d(TAG, "##### onClick #####")
         when (v.id) {
-            btn_login.id -> mPresenter.requestLogin(User(edtxt_id.text.toString(), edtxt_pw.text.toString(), "", "", ConstVariables.USER_TYPE_GENERAL))
-            btn_register.id -> mPresenter.requestRegister(User(edtxt_id.text.toString(), edtxt_pw.text.toString(), "", "", ConstVariables.USER_TYPE_GENERAL))
+            btn_login.id -> mPresenter.requestLogin(User(edtxt_login_id.text.toString(), edtxt_login_pw.text.toString()))
+            btn_register.id -> mPresenter.requestRegister()
         }
     }
 }

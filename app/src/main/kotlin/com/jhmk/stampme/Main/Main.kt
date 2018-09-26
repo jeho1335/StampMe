@@ -12,7 +12,7 @@ interface Main {
     interface presenter{
         fun requestLogin(user : User)
         fun requestRegister(user : User)
-        fun requestSaveUserInfo(contexc : Context, user : User)
+        fun requestSaveUserInfo(context : Context, user : User)
         fun requestDeleteUserInfo(context : Context, user : User)
     }
 }
