@@ -7,8 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.jhmk.stampme.Model.Shops
+import com.jhmk.stampme.Module.GlideApp
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_item_shops.view.*
 
@@ -18,13 +21,18 @@ class ShopsRecyclerviewAdapter(context: Context, items: MutableList<Shops?>, lis
     private var mItems: MutableList<Shops?> = items
     private var mListener: IClickListener = listener
     private val mContext = context
+    private lateinit var mGlideOption : RequestOptions
 
     interface IClickListener {
         fun onClick(id: Int)
+        fun onGetStampClick(id : Int)
     }
 
+    @SuppressLint("CheckResult")
     override fun onCreateViewHolder(viewGropu: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(viewGropu.context).inflate(R.layout.layout_item_shops, viewGropu, false)
+        mGlideOption = RequestOptions()
+        mGlideOption.transforms(CenterCrop(), RoundedCorners(16))
         return ViewHolder(v)
     }
 
@@ -35,9 +43,10 @@ class ShopsRecyclerviewAdapter(context: Context, items: MutableList<Shops?>, lis
         if(mItems.get(position)!!.isFront) {
             holder.itemView.layout_item_shops_front.visibility = View.VISIBLE
             holder.itemView.layout_item_shops_back.visibility = View.GONE
-            Glide
+            GlideApp
                     .with(mContext)
                     .load(item?.shopImageUrl)
+                    .apply(mGlideOption)
                     .into(holder.itemView.img_item_shops)
             holder.itemView.txt_name_item_shops.text = item?.shopName
             holder.itemView.txt_subname_item_shops.text = item?.shopAddress
@@ -62,7 +71,9 @@ class ShopsRecyclerviewAdapter(context: Context, items: MutableList<Shops?>, lis
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener { v -> mListener.onClick(adapterPosition)}
+            itemView.layout_item_shops_back.setOnClickListener { v -> mListener.onClick(adapterPosition)}
+            itemView.layout_item_shops_front.setOnClickListener { v -> mListener.onClick(adapterPosition)}
+            itemView.img_getstamp_back_item_shops.setOnClickListener{v -> mListener.onGetStampClick(adapterPosition)}
         }
     }
 }

@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     android:background="@color/color_app_theme">
 
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_toolbar" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_home_shops"
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_toolbar"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

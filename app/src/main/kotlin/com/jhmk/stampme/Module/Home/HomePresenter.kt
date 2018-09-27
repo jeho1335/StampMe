@@ -36,7 +36,4 @@ class HomePresenter(view: Home.view) : Home.presenter {
             }
         })
     }
-    override fun requestChangeToolbar(string: String) {
-        Log.d(TAG, "##### requestChangeToolbar #####")
-    }
 }

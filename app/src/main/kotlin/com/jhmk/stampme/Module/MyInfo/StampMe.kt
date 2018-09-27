@@ -1,13 +1,14 @@
 package com.jhmk.stampme.Module.MyInfo
 
 import android.graphics.Bitmap
+import com.jhmk.stampme.Model.MyStamps
 import com.jhmk.stampme.Model.Stamps
 import com.jhmk.stampme.Model.User
 
-interface MyInfo {
+interface StampMe {
     interface view{
         fun onResultMakeBarcode(user : User, bitmap : Bitmap?)
-        fun onResultGetMyStamp(user : User, resultList : MutableList<Stamps?>?)
+        fun onResultGetMyStamp(resultList : MutableList<MyStamps?>?)
     }
     interface presenter{
         fun requestMakeBarcode(user : User)

@@ -9,9 +9,8 @@ object ConstVariables {
     val EVENTBUS_REQUELST_LOGIN = 100
     val EVENTBUS_REQUELST_REGISTER = 101
     val EVENTBUS_REQUEST_LOGOUT = 102
-    val EVENTBUS_SHOW_REGISTER = 103
-    val EVENTBUS_CHANGE_TOOLBAR = 104
-
+    val EVENTBUS_SHOW_LOGIN = 103
+    val EVENTBUS_SHOW_REGISTER = 104
 
     /* Handle Fragment Key*/
     val SHOW_FRAGMENT_LOGIN = 200
@@ -21,4 +20,12 @@ object ConstVariables {
     /* Common Variables*/
     val USER_TYPE_SELLER = 0
     val USER_TYPE_BUYER = 1
+
+    /* Shop Type*/
+    val SHOP_TYPE_CAFE = "카페"
+    val SHOP_TYPE_RESTRAUNT = "식당"
+    val SHOP_TYPE_STORE = "편의점"
+    val SHOP_TYPE_MART = "마트"
+    val SHOP_TYPE_PUBLIC = "공공시설"
+    val SHOP_TYPE_ETC = "기타"
 }

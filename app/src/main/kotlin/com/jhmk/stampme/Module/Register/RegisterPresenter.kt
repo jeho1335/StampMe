@@ -1,6 +1,7 @@
 package com.jhmk.stampme.Module.Register
 
 import android.util.Log
+import android.view.View
 import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.EventBusObject
 import com.jhmk.stampme.Model.User
@@ -13,14 +14,18 @@ class RegisterPresenter(view: Register.view) : Register.presenter {
 
     override fun requestNextStep(id: String, pw: String, confirmPw: String) {
         Log.d(TAG, "##### requestNextStep #####")
+        if(id.contentEquals(".")){
+            mView.onResultNextStep(false, R.string.toast_register_failed_include_comma)
+            return
+        }
         if (id == "" || pw == "" || confirmPw == "") {
-            mView.onResultNextStep(false)
+            mView.onResultNextStep(false, R.string.toast_register_failed)
             return
         }
         if (pw == confirmPw) {
-            mView.onResultNextStep(true)
+            mView.onResultNextStep(true, R.string.toast_register_success_require_detail_info)
         } else {
-            mView.onResultNextStep(false)
+            mView.onResultNextStep(false, R.string.toast_register_failed_not_compare_pw)
         }
         return
     }
@@ -40,8 +45,12 @@ class RegisterPresenter(view: Register.view) : Register.presenter {
         EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_REQUELST_REGISTER, user))
     }
 
-    override fun requestChangeToolbar(string: String) {
-        Log.d(TAG, "##### requestChangeToolbar #####")
-        EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_CHANGE_TOOLBAR, string))
+    override fun requestBackButton(view: View) {
+        Log.d(TAG, "##### requestBackButton ##### ${view.visibility}")
+        if(view.visibility == View.VISIBLE){
+            EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_SHOW_LOGIN))
+        }else{
+            view.visibility = View.VISIBLE
+        }
     }
 }

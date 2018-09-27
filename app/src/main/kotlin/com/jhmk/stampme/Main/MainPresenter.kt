@@ -60,6 +60,10 @@ class MainPresenter(view: Main.view) : Main.presenter {
                 Log.d(TAG, "##### requestRegister ##### onDataChange")
                 val child = dataSnapShot.children.iterator()
 
+                if(user.userId.contentEquals(".")){
+                    mView.onResultRegister(false, R.string.toast_register_failed_include_comma, user)
+                }
+
                 while (child.hasNext()) {
                     if (child.next().key.equals(user.userId)) {
                         mView.onResultRegister(false, R.string.toast_register_duplicate_failed, user)

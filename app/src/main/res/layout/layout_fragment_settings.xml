@@ -6,6 +6,10 @@
     android:background="@color/color_app_theme"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/layout_toolbar" />
+
     <RelativeLayout
         android:id="@+id/layout_settings_logout"
         android:layout_width="match_parent"

@@ -11,9 +11,8 @@ import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
 import com.jhmk.stampme.Module.Home.HomeFragment
 import com.jhmk.stampme.Module.Login.LoginFragment
-import com.jhmk.stampme.Module.MyInfo.MyInfoFragment
+import com.jhmk.stampme.Module.MyInfo.StampMeFragment
 import com.jhmk.stampme.Module.Register.RegisterFragment
-import com.jhmk.stampme.Module.Settings.SettingsFragment
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
@@ -47,9 +46,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
 
     fun initializeUI() {
         Log.d(TAG, "##### initializeUI #####")
-        img_main_tab_1.setOnClickListener(this)
-        img_main_tab_2.setOnClickListener(this)
-        img_main_tab_3.setOnClickListener(this)
+        img_stampyou_main_tab.setOnClickListener(this)
+        img_home_main_tab.setOnClickListener(this)
+        img_stampme_main_tab.setOnClickListener(this)
         mContentView = (layout_main_content as View)
     }
 
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         Log.d(TAG, "##### onClick #####")
         when (v.id) {
 
-            img_main_tab_1.id, img_main_tab_2.id, img_main_tab_3.id -> {
+            img_stampyou_main_tab.id, img_home_main_tab.id, img_stampme_main_tab.id -> {
                 try {
                     handleFragment(v.id, mCurrentUser)
                 } catch (e: Exception) {
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             mCurrentUser = user
             mPresenter.requestSaveUserInfo(this, user)
             if (user.userType == ConstVariables.USER_TYPE_BUYER) {
-                handleFragment(img_main_tab_2.id, user)
+                handleFragment(img_home_main_tab.id, user)
             } else if (user.userType == ConstVariables.USER_TYPE_SELLER) {
             }
         } else {
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         if (result) {
             mPresenter.requestSaveUserInfo(this, user)
             if (user.userType == ConstVariables.USER_TYPE_BUYER) {
-                handleFragment(img_main_tab_2.id, user)
+                handleFragment(img_home_main_tab.id, user)
             } else if (user.userType == ConstVariables.USER_TYPE_SELLER) {
             }
         } else {
@@ -128,36 +127,53 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         when (state) {
             ConstVariables.SHOW_FRAGMENT_LOGIN -> {
                 layout_main_tab.visibility = View.GONE
-                layout_main_toolbar.visibility = View.GONE
                 fr = LoginFragment()
             }
             ConstVariables.SHOW_FRAGMENT_REGISTER -> {
                 layout_main_tab.visibility = View.GONE
-                layout_main_toolbar.visibility = View.VISIBLE
                 fr = RegisterFragment()
             }
-            img_main_tab_1.id -> {
+            img_stampyou_main_tab.id -> {
                 layout_main_tab.visibility = View.VISIBLE
-                layout_main_toolbar.visibility = View.VISIBLE
-                fr = MyInfoFragment()
+
+                img_stampyou_main_tab.isSelected = true
+                img_stampme_main_tab.isSelected = false
+                img_home_main_tab.isSelected = false
+
+               /* fr = StampMeFragment()
+                if (user != null) {
+                    val bundle = Bundle()
+                    bundle.putSerializable("UserItem", user)
+                    fr.arguments = bundle
+                }*/
+            }
+            img_home_main_tab.id -> {
+                layout_main_tab.visibility = View.VISIBLE
+
+                img_home_main_tab.isSelected = true
+                img_stampyou_main_tab.isSelected = false
+                img_stampme_main_tab.isSelected = false
+
+                fr = HomeFragment()
+            }
+            img_stampme_main_tab.id -> {
+                layout_main_tab.visibility = View.VISIBLE
+
+                img_stampme_main_tab.isSelected = true
+                img_stampyou_main_tab.isSelected = false
+                img_home_main_tab.isSelected = false
+
+                fr = StampMeFragment()
                 if (user != null) {
                     val bundle = Bundle()
                     bundle.putSerializable("UserItem", user)
                     fr.arguments = bundle
                 }
-            }
-            img_main_tab_2.id -> {
-                layout_main_tab.visibility = View.VISIBLE
-                layout_main_toolbar.visibility = View.VISIBLE
-                fr = HomeFragment()
-            }
-            img_main_tab_3.id -> {
-                layout_main_tab.visibility = View.VISIBLE
-                layout_main_toolbar.visibility = View.VISIBLE
-                fr = SettingsFragment()
+
+                /*fr = SettingsFragment()
                 val bundle = Bundle()
                 bundle.putSerializable("UserItem", user)
-                fr.arguments = bundle
+                fr.arguments = bundle*/
             }
         }
 
@@ -179,7 +195,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             ConstVariables.EVENTBUS_REQUELST_REGISTER -> mPresenter.requestRegister(obj.val1 as User)
             ConstVariables.EVENTBUS_REQUEST_LOGOUT -> mPresenter.requestDeleteUserInfo(this, obj.val1 as User)
             ConstVariables.EVENTBUS_SHOW_REGISTER -> handleFragment(ConstVariables.SHOW_FRAGMENT_REGISTER, null)
-            ConstVariables.EVENTBUS_CHANGE_TOOLBAR -> txt_title_main_toolbar.text = obj.val1 as String
+            ConstVariables.EVENTBUS_SHOW_LOGIN -> handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, null)
         }
     }
 }

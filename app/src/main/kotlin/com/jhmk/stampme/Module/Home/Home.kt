@@ -10,6 +10,5 @@ interface Home {
 
     interface presenter {
         fun requestAroundShopList(context: Context)
-        fun requestChangeToolbar(string : String)
     }
 }

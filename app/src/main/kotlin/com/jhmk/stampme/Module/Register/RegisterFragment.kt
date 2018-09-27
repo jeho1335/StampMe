@@ -10,6 +10,7 @@ import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_fragment_register.*
+import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.jetbrains.anko.toast
 
 class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
@@ -31,21 +32,22 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
 
     fun initializeUi() {
         Log.d(TAG, "##### initializeUi #####")
+        txt_title_toolbar.text = resources.getString(R.string.string_title_create_account)
+        img_back_toolbar.setOnClickListener(this)
         img_register_proceed.setOnClickListener(this)
         img_register_start.setOnClickListener(this)
         img_register_select_buyer.setOnClickListener(this)
         img_register_select_seller.setOnClickListener(this)
         img_register_select_seller.setBackgroundResource(R.drawable.btn_seller_n_2)
-        mPresenter.requestChangeToolbar(resources.getString(R.string.string_title_create_account))
     }
 
-    override fun onResultNextStep(flag: Boolean) {
+    override fun onResultNextStep(flag: Boolean, msg: Int) {
         Log.d(TAG, "##### onResyultNextStep #####")
+        activity?.toast(resources.getString(msg))
         if (flag) {
+            txt_title_toolbar.text = resources.getString(R.string.string_title_set_up_profile)
             layout_register_create_account.visibility = View.GONE
-            layoutr_register_setup_profile.visibility = View.VISIBLE
-        } else {
-            activity?.toast(resources.getString(R.string.toast_register_failed))
+            layout_register_setup_profile.visibility = View.VISIBLE
         }
     }
 
@@ -61,7 +63,7 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
                             , edtxt_register_location.text.toString()
                             , mUserType))
         } else {
-            activity?.toast(resources.getString(R.string.toast_register_failed))
+            activity?.toast(resources.getString(msg))
         }
 
     }
@@ -69,9 +71,11 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
     override fun onClick(v: View) {
         Log.d(TAG, "##### onClick #####")
         when (v.id) {
+            img_back_toolbar.id -> {
+                mPresenter.requestBackButton(layout_register_create_account)
+            }
             img_register_proceed.id -> {
                 mPresenter.requestNextStep(edtxt_register_id.text.toString(), edtxt_register_pw.text.toString(), edtxt_register_confirm_pw.text.toString())
-                mPresenter.requestChangeToolbar(resources.getString(R.string.string_title_set_up_profile))
             }
             img_register_start.id -> {
                 mPresenter.requestCreateAccount(edtxt_register_fullname.text.toString(), edtxt_register_phonenumber.text.toString(), edtxt_register_location.text.toString())
