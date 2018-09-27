@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.DataBaseReference
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
@@ -32,9 +33,9 @@ class MainPresenter(view: Main.view) : Main.presenter {
                         if (dataSnapShot.child(user.userId).child("userPw").value == user.userPw) {
                             val currentUser = dataSnapShot.child(user.userId).getValue(User().javaClass)
 
-                            if(currentUser != null) {
+                            if (currentUser != null) {
                                 mView.onResultLogin(true, R.string.toast_login_success, currentUser)
-                            }else{
+                            } else {
                                 mView.onResultLogin(false, R.string.toast_login_failed, user)
                             }
                             DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
@@ -60,7 +61,7 @@ class MainPresenter(view: Main.view) : Main.presenter {
                 Log.d(TAG, "##### requestRegister ##### onDataChange")
                 val child = dataSnapShot.children.iterator()
 
-                if(user.userId.contentEquals(".")){
+                if (user.userId.contentEquals(".")) {
                     mView.onResultRegister(false, R.string.toast_register_failed_include_comma, user)
                 }
 
@@ -92,5 +93,25 @@ class MainPresenter(view: Main.view) : Main.presenter {
         Log.d(TAG, "##### requestDeleteUserInfo ##### id : ${user.userId}")
         PreferencesManager.deleteUserInfo(context, user)
         mView.onResultLogout(PreferencesManager.deleteUserInfo(context, user), R.string.string_logout)
+    }
+
+    override fun requestSelectTab(user: User, tabId: Int) {
+        Log.d(TAG, "##### requestSelectTab #####")
+        when (tabId) {
+            ConstVariables.TAB_STAMPYOU -> {
+                if(user.userType == ConstVariables.USER_TYPE_BUYER){
+                 mView.onResultSelectTab(false, R.string.toast_cannot_buyer, tabId)
+                }else{
+                    mView.onResultSelectTab(true, -1, tabId)
+                }
+            }
+            ConstVariables.TAB_HOME -> {
+                mView.onResultSelectTab(true, -1, tabId)
+
+            }
+            ConstVariables.TAB_STAMPME -> {
+                mView.onResultSelectTab(true, -1, tabId)
+            }
+        }
     }
 }

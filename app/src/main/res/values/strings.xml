@@ -31,6 +31,7 @@
     <string name="toast_register_duplicate_failed">다른 지킴이께서 사용중인 ID에요.</string>
     <string name="toast_logout_success">로그아웃 되었습니다.</string>
     <string name="toast_logout_failed">로그아웃에 실패하였습니다.</string>
+    <string name="toast_cannot_buyer">제휴업체 전용 메뉴에요.</string>
 
     <!-- Alert Messages -->
     <string name="alert_logout_title">로그아웃 하시겠어요?</string>

@@ -1,14 +1,12 @@
 package com.jhmk.stampme.Module.MyInfo
 
+import android.util.ArraySet
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
-import com.jhmk.stampme.Model.MyStamps
-import com.jhmk.stampme.Model.Shops
-import com.jhmk.stampme.Model.Stamps
-import com.jhmk.stampme.Model.User
+import com.jhmk.stampme.Model.*
 import com.jhmk.stampme.Module.DataBase.DataBaseReference
 import com.jhmk.stampme.Module.Utils.MakeBarcode
 import kotlin.collections.ArrayList
@@ -67,10 +65,10 @@ class StampMePresenter(view: StampMe.view) : StampMe.presenter {
 
                 Log.d(TAG, "##### getCurrentShopList ##### resultList.size :  ${shopList.size} stampList.size : ${stampList.size}")
 
-                for((index, value) in stampList.withIndex()){
+                for ((index, value) in stampList.withIndex()) {
                     Log.d(TAG, "##### getCurrentShopList ##### ${value?.stampSource}")
-                    for(value in shopList.withIndex()){
-                        if( value.value?.shopName == stampList[index]?.stampSource){
+                    for (value in shopList.withIndex()) {
+                        if (value.value!!.shopName == stampList[index]!!.stampSource) {
                             myStampResultList.add(MyStamps(stampList[index]!!.stampSource, value.value!!.shopType, value.value!!.shopImageUrl, stampList[index]!!.stampReason, shopList[index]!!.shopAddress))
                             Log.d(TAG, "##### getCurrentShopList ##### ${stampList[index]!!.stampSource}   ${shopList[index]!!.shopImageUrl} ")
                         }
@@ -78,10 +76,33 @@ class StampMePresenter(view: StampMe.view) : StampMe.presenter {
 
                 }
                 mView.onResultGetMyStamp(myStampResultList)
-
                 DataBaseReference.mShopsDatabaseReference.removeEventListener(this)
             }
         })
         return shopList
     }
+
+    override fun requestSeperateMyStamp(myStampList: MutableList<MyStamps?>) {
+        Log.d(TAG, "##### getSeperateType #####")
+        val cafeList: MutableList<MyStamps?> = ArrayList()
+        val restaurantcList: MutableList<MyStamps?> = ArrayList()
+        val storeList: MutableList<MyStamps?> = ArrayList()
+        val martList: MutableList<MyStamps?> = ArrayList()
+        val publicList: MutableList<MyStamps?> = ArrayList()
+        val etcList: MutableList<MyStamps?> = ArrayList()
+
+        for ((index, value) in myStampList.withIndex()) {
+            when (value!!.stampSourceType) {
+                ConstVariables.SHOP_TYPE_CAFE -> cafeList.add(myStampList[index])
+                ConstVariables.SHOP_TYPE_RESTRAUNT -> restaurantcList.add(myStampList[index])
+                ConstVariables.SHOP_TYPE_STORE -> storeList.add(myStampList[index])
+                ConstVariables.SHOP_TYPE_MART -> martList.add(myStampList[index])
+                ConstVariables.SHOP_TYPE_PUBLIC -> publicList.add(myStampList[index])
+                ConstVariables.SHOP_TYPE_ETC -> etcList.add(myStampList[index])
+            }
+        }
+        mView.onResultSeperateMyStamp(cafeList, restaurantcList, storeList, martList, publicList, etcList)
+    }
+
+
 }

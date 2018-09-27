@@ -20,28 +20,41 @@
         android:layout_alignParentBottom="true">
 
         <ImageView
-            android:id="@+id/img_stampyou_main_tab"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:layout_toStartOf="@+id/img_home_main_tab"
-            android:background="@drawable/selector_stamp_you_btn" />
+            android:id="@+id/img_line_main_tab"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_toolbar_line" />
 
-        <ImageView
-            android:id="@+id/img_home_main_tab"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/selector_home_btn" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_line_main_tab">
 
-        <ImageView
-            android:id="@+id/img_stampme_main_tab"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/img_home_main_tab"
-            android:background="@drawable/selector_stamp_me_btn" />
+            <ImageView
+                android:id="@+id/img_stampyou_main_tab"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toStartOf="@+id/img_home_main_tab"
+                android:background="@drawable/selector_stamp_you_btn" />
+
+            <ImageView
+                android:id="@+id/img_home_main_tab"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/selector_home_btn" />
+
+            <ImageView
+                android:id="@+id/img_stampme_main_tab"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/img_home_main_tab"
+                android:background="@drawable/selector_stamp_me_btn" />
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

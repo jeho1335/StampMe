@@ -9,9 +9,11 @@ interface StampMe {
     interface view{
         fun onResultMakeBarcode(user : User, bitmap : Bitmap?)
         fun onResultGetMyStamp(resultList : MutableList<MyStamps?>?)
+        fun onResultSeperateMyStamp(cafeList : MutableList<MyStamps?>, restrauntList : MutableList<MyStamps?>, storeList : MutableList<MyStamps?>, martList : MutableList<MyStamps?>, publicList : MutableList<MyStamps?>, etcList : MutableList<MyStamps?>)
     }
     interface presenter{
         fun requestMakeBarcode(user : User)
         fun requestGetMyStamp(user : User)
+        fun requestSeperateMyStamp(myStampList : MutableList<MyStamps?>)
     }
 }

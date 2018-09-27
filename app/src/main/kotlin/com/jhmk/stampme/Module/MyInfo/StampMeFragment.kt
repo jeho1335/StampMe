@@ -57,14 +57,16 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
     override fun onResultGetMyStamp(resultList: MutableList<MyStamps?>?) {
         Log.d(TAG, "##### onResultGetMyStamp #####")
         if (resultList != null) {
-            for(value in resultList.withIndex()){
-                Log.d(TAG, "##### onResultGetMyStamp ##### ${value.value!!.stampSourceType}")
-            }
+            mPresenter.requestSeperateMyStamp(resultList)
             Log.d(TAG, "##### onResultGetMyStamp list size : ${resultList.size}#####")
             mAdapter = StampsRecyclerviewAdapter(activity as Context, resultList, this)
             list_latest_stamps.adapter = mAdapter
             list_latest_stamps.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             list_latest_stamps.setHasFixedSize(true)
         }
+    }
+
+    override fun onResultSeperateMyStamp(cafeList: MutableList<MyStamps?>, restrauntList: MutableList<MyStamps?>, storeList: MutableList<MyStamps?>, martList: MutableList<MyStamps?>, publicList: MutableList<MyStamps?>, etcList: MutableList<MyStamps?>) {
+        Log.d(TAG, "##### onResultSeperateMyStamp ##### \ncafeList ${cafeList.size} \nrestrauntList ${restrauntList.size} \nstoreList ${storeList.size} \nmartList ${martList.size} \npublicList ${publicList.size} \netcList ${etcList.size}")
     }
 }

@@ -55,15 +55,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
     override fun onClick(v: View) {
         Log.d(TAG, "##### onClick #####")
         when (v.id) {
-
-            img_stampyou_main_tab.id, img_home_main_tab.id, img_stampme_main_tab.id -> {
-                try {
-                    handleFragment(v.id, mCurrentUser)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-
+            img_stampyou_main_tab.id -> mPresenter.requestSelectTab(mCurrentUser, ConstVariables.TAB_STAMPYOU)
+            img_home_main_tab.id -> mPresenter.requestSelectTab(mCurrentUser, ConstVariables.TAB_HOME)
+            img_stampme_main_tab.id -> mPresenter.requestSelectTab(mCurrentUser, ConstVariables.TAB_STAMPME)
         }
     }
 
@@ -107,6 +101,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         }
     }
 
+    override fun onResultSelectTab(result: Boolean, msg: Int, tabId: Int) {
+        Log.d(TAG, "##### onResultSelectTab #####")
+        var id = -1
+        when (tabId) {
+            ConstVariables.TAB_STAMPYOU -> {
+                if (result) {
+                    id = img_stampyou_main_tab.id
+                } else {
+                    toast(resources.getString(msg))
+                    return
+                }
+            }
+            ConstVariables.TAB_HOME -> id = img_home_main_tab.id
+            ConstVariables.TAB_STAMPME -> id = img_stampme_main_tab.id
+        }
+
+        try {
+            handleFragment(id, mCurrentUser)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun loadLoginState() {
         Log.d(TAG, "##### loadLoginState #####")
         val loadedUser = PreferencesManager.loadUserInfo(this)
@@ -135,21 +152,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             }
             img_stampyou_main_tab.id -> {
                 layout_main_tab.visibility = View.VISIBLE
-
                 img_stampyou_main_tab.isSelected = true
                 img_stampme_main_tab.isSelected = false
                 img_home_main_tab.isSelected = false
 
-               /* fr = StampMeFragment()
-                if (user != null) {
-                    val bundle = Bundle()
-                    bundle.putSerializable("UserItem", user)
-                    fr.arguments = bundle
-                }*/
             }
             img_home_main_tab.id -> {
                 layout_main_tab.visibility = View.VISIBLE
-
                 img_home_main_tab.isSelected = true
                 img_stampyou_main_tab.isSelected = false
                 img_stampme_main_tab.isSelected = false
@@ -158,12 +167,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             }
             img_stampme_main_tab.id -> {
                 layout_main_tab.visibility = View.VISIBLE
-
                 img_stampme_main_tab.isSelected = true
                 img_stampyou_main_tab.isSelected = false
                 img_home_main_tab.isSelected = false
 
                 fr = StampMeFragment()
+
                 if (user != null) {
                     val bundle = Bundle()
                     bundle.putSerializable("UserItem", user)

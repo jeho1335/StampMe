@@ -49,7 +49,9 @@ class ShopsRecyclerviewAdapter(context: Context, items: MutableList<Shops?>, lis
                     .apply(mGlideOption)
                     .into(holder.itemView.img_item_shops)
             holder.itemView.txt_name_item_shops.text = item?.shopName
+            holder.itemView.txt_name_item_shops.isSelected = true
             holder.itemView.txt_subname_item_shops.text = item?.shopAddress
+            holder.itemView.txt_subname_item_shops.isSelected = true
             holder.itemView.txt_distance_item_shops.text = item?.shopDistance
         }else{
             holder.itemView.layout_item_shops_front.visibility = View.GONE

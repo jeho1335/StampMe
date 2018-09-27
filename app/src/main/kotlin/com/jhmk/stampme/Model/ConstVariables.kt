@@ -28,4 +28,9 @@ object ConstVariables {
     val SHOP_TYPE_MART = "마트"
     val SHOP_TYPE_PUBLIC = "공공시설"
     val SHOP_TYPE_ETC = "기타"
+
+    /* Select Tab*/
+    val TAB_STAMPYOU = 0
+    val TAB_HOME = 1
+    val TAB_STAMPME = 2
 }

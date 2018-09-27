@@ -14,7 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rect_outline"
         android:orientation="vertical"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/img_item_shops"
@@ -26,10 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="7dp"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
-            android:paddingTop="7dp">
+            android:paddingTop="7dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="7dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,42 +40,44 @@
                     android:id="@+id/txt_name_item_shops"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxWidth="200dp"
+                    android:ellipsize="marquee"
                     android:singleLine="true"
                     android:textColor="@color/color_shops_name"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    tools:text="스타벅스" />
+                    tools:text="GS25b 성북마을점" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="7dp">
 
                 <TextView
                     android:id="@+id/txt_subname_item_shops"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:maxWidth="200dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/txt_distance_item_shops"
+                    android:ellipsize="marquee"
                     android:singleLine="true"
                     android:textColor="@color/color_shops_sub_name"
                     android:textSize="13sp"
-                    tools:text="연대 백양로점" />
+                    tools:text="서울특별시 성북구 성북로 22" />
 
                 <TextView
                     android:id="@+id/txt_distance_item_shops"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="right"
-                    android:maxWidth="200dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
                     android:singleLine="true"
                     android:textColor="@color/color_shops_sub_name"
                     android:textSize="13sp"
-                    tools:text="20m" />
-            </LinearLayout>
+                    tools:text="77m" />
+            </RelativeLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -87,7 +89,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rect_outline_back"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/txt_title_back_item_shops"
@@ -95,8 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:gravity="center_horizontal"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:singleLine="true"
             android:text="@string/item_back_title"
             android:textColor="@color/color_outline_back"
@@ -110,8 +112,8 @@
             android:layout_below="@+id/txt_title_back_item_shops"
             android:layout_marginTop="12dp"
             android:maxWidth="200dp"
-            android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:singleLine="true"
             android:textColor="@color/color_shops_name"
             android:textSize="13sp"

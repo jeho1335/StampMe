@@ -47,9 +47,7 @@ class HomeFragment : Fragment(), Home.view, ShopsRecyclerviewAdapter.IClickListe
 
     override fun onResultAroundShopList(list: MutableList<Shops?>) {
         Log.d(TAG, "##### onResultAroundShopList #####")
-        mAdapter =
-
-                ShopsRecyclerviewAdapter(activity as Context, list, this)
+        mAdapter = ShopsRecyclerviewAdapter(activity as Context, list, this)
         list_home_shops.adapter = mAdapter
         list_home_shops.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
         list_home_shops.setHasFixedSize(true)
