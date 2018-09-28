@@ -1,7 +1,5 @@
 package com.jhmk.stampme.Model
 
-import java.io.Serializable
-
 class MyStamps {
     var stampsSource = ""
     var stampSourceType = ""

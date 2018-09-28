@@ -8,7 +8,7 @@ import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 
 object MakeBarcode {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
     private val WIDTH = 400
     private val HEIGHT = 400
 

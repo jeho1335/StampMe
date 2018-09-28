@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jhmk.stampme.Model.User
-import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_fragment_login.*
 
 class LoginFragment : Fragment(), View.OnClickListener {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
     private lateinit var mPresenter: Login.presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,7 +33,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        Log.d(TAG, "##### onClick #####")
+        Log.d(TAG, "##### onItemClick #####")
         when (v.id) {
             btn_login.id -> mPresenter.requestLogin(User(edtxt_login_id.text.toString(), edtxt_login_pw.text.toString()))
             btn_register.id -> mPresenter.requestRegister()

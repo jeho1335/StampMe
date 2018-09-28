@@ -9,19 +9,21 @@ import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.EventBusObject
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
-import com.jhmk.stampme.Module.Home.HomeFragment
 import com.jhmk.stampme.Module.Login.LoginFragment
-import com.jhmk.stampme.Module.MyInfo.StampMeFragment
+import com.jhmk.stampme.Module.NearbyShops.NearbyShopsFragment
 import com.jhmk.stampme.Module.Register.RegisterFragment
+import com.jhmk.stampme.Module.Settings.SettingsFragment
+import com.jhmk.stampme.Module.StampMe.StampMeFragment
 import com.jhmk.stampme.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.jhmk.stampme.R.id.*
 import org.greenrobot.eventbus.EventBus
+import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 import org.jetbrains.anko.toast
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
     private lateinit var mPresenter: MainPresenter
     private lateinit var mContentView: View
     private lateinit var mCurrentUser: User
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
     }
 
     override fun onClick(v: View) {
-        Log.d(TAG, "##### onClick #####")
+        Log.d(TAG, "##### onItemClick #####")
         when (v.id) {
             img_stampyou_main_tab.id -> mPresenter.requestSelectTab(mCurrentUser, ConstVariables.TAB_STAMPYOU)
             img_home_main_tab.id -> mPresenter.requestSelectTab(mCurrentUser, ConstVariables.TAB_HOME)
@@ -81,6 +83,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         Log.d(TAG, "##### onResultRegister #####")
         toast(resources.getString(msg))
         if (result) {
+            mCurrentUser = user
             mPresenter.requestSaveUserInfo(this, user)
             if (user.userType == ConstVariables.USER_TYPE_BUYER) {
                 handleFragment(img_home_main_tab.id, user)
@@ -124,6 +127,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         }
     }
 
+    override fun onResultBackPressed(result: Boolean, msg: Int) {
+        Log.d(TAG, "##### onResultBackPressed #####")
+        if(result){
+            this.finish()
+        }else{
+            toast(resources.getString(msg))
+        }
+    }
+
     fun loadLoginState() {
         Log.d(TAG, "##### loadLoginState #####")
         val loadedUser = PreferencesManager.loadUserInfo(this)
@@ -142,6 +154,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
 
         when (state) {
+            ConstVariables.FRAGMENT_BACKSTACK -> {
+                fm.popBackStack()
+                return
+            }
+
             ConstVariables.SHOW_FRAGMENT_LOGIN -> {
                 layout_main_tab.visibility = View.GONE
                 fr = LoginFragment()
@@ -149,6 +166,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             ConstVariables.SHOW_FRAGMENT_REGISTER -> {
                 layout_main_tab.visibility = View.GONE
                 fr = RegisterFragment()
+            }
+            ConstVariables.SHOW_FRAGMENT_SETTINGS -> {
+                fr = SettingsFragment()
+
+                if (user != null) {
+                    val bundle = Bundle()
+                    bundle.putSerializable("UserItem", user)
+                    fr.arguments = bundle
+                }
             }
             img_stampyou_main_tab.id -> {
                 layout_main_tab.visibility = View.VISIBLE
@@ -163,7 +189,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
                 img_stampyou_main_tab.isSelected = false
                 img_stampme_main_tab.isSelected = false
 
-                fr = HomeFragment()
+                fr = NearbyShopsFragment()
+
+                if (user != null) {
+                    val bundle = Bundle()
+                    bundle.putSerializable("UserItem", user)
+                    fr.arguments = bundle
+                }
             }
             img_stampme_main_tab.id -> {
                 layout_main_tab.visibility = View.VISIBLE
@@ -179,19 +211,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
                     fr.arguments = bundle
                 }
 
-                /*fr = SettingsFragment()
-                val bundle = Bundle()
-                bundle.putSerializable("UserItem", user)
-                fr.arguments = bundle*/
             }
         }
 
         if (fr.isAdded) {
             ft.show(fr)
         } else {
+            ft.addToBackStack(null)
             ft.add(mContentView.id, fr, fr.javaClass.simpleName)
         }
-
 
         ft.commit()
     }
@@ -205,6 +233,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             ConstVariables.EVENTBUS_REQUEST_LOGOUT -> mPresenter.requestDeleteUserInfo(this, obj.val1 as User)
             ConstVariables.EVENTBUS_SHOW_REGISTER -> handleFragment(ConstVariables.SHOW_FRAGMENT_REGISTER, null)
             ConstVariables.EVENTBUS_SHOW_LOGIN -> handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, null)
+            ConstVariables.EVENTBUS_SHOW_SETTINGS -> handleFragment(ConstVariables.SHOW_FRAGMENT_SETTINGS, obj.val1 as User)
+            ConstVariables.EVENTBUS_POP_BACKSTACK -> handleFragment(ConstVariables.FRAGMENT_BACKSTACK, null)
         }
+    }
+
+    override fun onBackPressed() {
+        Log.d(TAG, "##### onBackPressed ##### ")
+        mPresenter.requestBackPressed()
     }
 }

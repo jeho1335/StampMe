@@ -11,11 +11,14 @@ object ConstVariables {
     val EVENTBUS_REQUEST_LOGOUT = 102
     val EVENTBUS_SHOW_LOGIN = 103
     val EVENTBUS_SHOW_REGISTER = 104
+    val EVENTBUS_SHOW_SETTINGS = 105
+    val EVENTBUS_POP_BACKSTACK = 106
 
     /* Handle Fragment Key*/
     val SHOW_FRAGMENT_LOGIN = 200
     val SHOW_FRAGMENT_REGISTER = 201
     val SHOW_FRAGMENT_SETTINGS = 202
+    val FRAGMENT_BACKSTACK = 203
 
     /* Common Variables*/
     val USER_TYPE_SELLER = 0

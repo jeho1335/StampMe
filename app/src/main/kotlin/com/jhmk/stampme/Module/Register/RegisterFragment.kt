@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.R
+import com.jhmk.stampme.R.id.*
 import kotlinx.android.synthetic.main.layout_fragment_register.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.jetbrains.anko.toast
 
 class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
-    val TAG = this.javaClass.simpleName
-    lateinit var mPresenter: RegisterPresenter
-    var mUserType = -1;
+    private val TAG = this.javaClass.simpleName
+    private lateinit var mPresenter: RegisterPresenter
+    private var mUserType = -1;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "##### onCreateView @#####")
@@ -69,7 +70,7 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        Log.d(TAG, "##### onClick #####")
+        Log.d(TAG, "##### onItemClick #####")
         when (v.id) {
             img_back_toolbar.id -> {
                 mPresenter.requestBackButton(layout_register_create_account)

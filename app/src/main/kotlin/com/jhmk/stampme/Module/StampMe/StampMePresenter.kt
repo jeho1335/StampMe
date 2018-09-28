@@ -1,6 +1,5 @@
-package com.jhmk.stampme.Module.MyInfo
+package com.jhmk.stampme.Module.StampMe
 
-import android.util.ArraySet
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -9,10 +8,10 @@ import com.google.gson.Gson
 import com.jhmk.stampme.Model.*
 import com.jhmk.stampme.Module.DataBase.DataBaseReference
 import com.jhmk.stampme.Module.Utils.MakeBarcode
-import kotlin.collections.ArrayList
+import org.greenrobot.eventbus.EventBus
 
 class StampMePresenter(view: StampMe.view) : StampMe.presenter {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
     private val mView = view
 
     override fun requestMakeBarcode(user: User) {
@@ -104,5 +103,8 @@ class StampMePresenter(view: StampMe.view) : StampMe.presenter {
         mView.onResultSeperateMyStamp(cafeList, restaurantcList, storeList, martList, publicList, etcList)
     }
 
-
+    override fun requestSettings(user : User) {
+        Log.d(TAG, "##### requestSettings #####")
+        EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_SHOW_SETTINGS, user))
+    }
 }

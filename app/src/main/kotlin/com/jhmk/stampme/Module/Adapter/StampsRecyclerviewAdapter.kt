@@ -15,16 +15,16 @@ import com.jhmk.stampme.Module.GlideApp
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_item_stamps.view.*
 
-class StampsRecyclerviewAdapter(context: Context, items: MutableList<MyStamps?>, listener: StampsRecyclerviewAdapter.IClickListener) : RecyclerView.Adapter<StampsRecyclerviewAdapter.ViewHolder>() {
+class StampsRecyclerviewAdapter(context: Context, items: MutableList<MyStamps?>, listener: StampsRecyclerviewAdapter.IClickListener?) : RecyclerView.Adapter<StampsRecyclerviewAdapter.ViewHolder>() {
     val TAG = this.javaClass.simpleName
 
     private var mItems: MutableList<MyStamps?> = items
-    private var mListener: IClickListener = listener
+    private var mListener: IClickListener? = listener
     private val mContext = context
     private lateinit var mGlideOption : RequestOptions
 
     interface IClickListener {
-        fun onClick(id: Int)
+        fun onItemClick(id: Int)
     }
 
     @SuppressLint("CheckResult")
@@ -54,7 +54,7 @@ class StampsRecyclerviewAdapter(context: Context, items: MutableList<MyStamps?>,
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.layout_my_stamps.setOnClickListener { v -> mListener.onClick(adapterPosition)}
+            itemView.layout_my_stamps.setOnClickListener { v -> mListener!!.onItemClick(adapterPosition)}
         }
     }
 }

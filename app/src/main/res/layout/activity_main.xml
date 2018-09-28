@@ -32,23 +32,23 @@
 
             <ImageView
                 android:id="@+id/img_stampyou_main_tab"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_toStartOf="@+id/img_home_main_tab"
                 android:background="@drawable/selector_stamp_you_btn" />
 
             <ImageView
                 android:id="@+id/img_home_main_tab"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/selector_home_btn" />
 
             <ImageView
                 android:id="@+id/img_stampme_main_tab"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/img_home_main_tab"

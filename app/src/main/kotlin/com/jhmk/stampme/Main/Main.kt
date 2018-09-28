@@ -9,6 +9,7 @@ interface Main {
         fun onResultRegister(result : Boolean, msg : Int, user : User)
         fun onResultLogout(result : Boolean, msg : Int)
         fun onResultSelectTab(result : Boolean, msg : Int, tabId : Int)
+        fun onResultBackPressed(result : Boolean, msg : Int)
     }
     interface presenter{
         fun requestLogin(user : User)
@@ -16,5 +17,6 @@ interface Main {
         fun requestSaveUserInfo(context : Context, user : User)
         fun requestDeleteUserInfo(context : Context, user : User)
         fun requestSelectTab(user : User, tabId : Int)
+        fun requestBackPressed()
     }
 }

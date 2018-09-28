@@ -7,10 +7,15 @@ import com.jhmk.stampme.Model.User
 import org.greenrobot.eventbus.EventBus
 
 class SettingsPresenter : Settings.presenter {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
 
     override fun requestLogout(user: User) {
         Log.d(TAG, "##### requestLogout #####")
         EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_REQUEST_LOGOUT, user as Any))
+    }
+
+    override fun requestBackstack() {
+        Log.d(TAG, "##### requestBackstack #####")
+        super.requestBackstack()
     }
 }

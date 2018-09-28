@@ -1,4 +1,4 @@
-package com.jhmk.stampme.Module.Home
+package com.jhmk.stampme.Module.NearbyShops
 
 import android.content.Context
 import android.util.Log
@@ -9,9 +9,9 @@ import com.jhmk.stampme.Model.Shops
 import com.jhmk.stampme.Module.DataBase.DataBaseReference
 import java.util.*
 
-class HomePresenter(view: Home.view) : Home.presenter {
-    val TAG = this.javaClass.simpleName
-    val mView = view
+class NearbyShopsPresenter(view: NearbyShops.view) : NearbyShops.presenter {
+    private val TAG = this.javaClass.simpleName
+    private val mView = view
 
     override fun requestAroundShopList(context: Context) {
         Log.d(TAG, "##### requestAroundShopList #####")

@@ -24,7 +24,7 @@ class ShopsRecyclerviewAdapter(context: Context, items: MutableList<Shops?>, lis
     private lateinit var mGlideOption : RequestOptions
 
     interface IClickListener {
-        fun onClick(id: Int)
+        fun onItemClick(id: Int)
         fun onGetStampClick(id : Int)
     }
 
@@ -73,8 +73,8 @@ class ShopsRecyclerviewAdapter(context: Context, items: MutableList<Shops?>, lis
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.layout_item_shops_back.setOnClickListener { v -> mListener.onClick(adapterPosition)}
-            itemView.layout_item_shops_front.setOnClickListener { v -> mListener.onClick(adapterPosition)}
+            itemView.layout_item_shops_back.setOnClickListener { v -> mListener.onItemClick(adapterPosition)}
+            itemView.layout_item_shops_front.setOnClickListener { v -> mListener.onItemClick(adapterPosition)}
             itemView.img_getstamp_back_item_shops.setOnClickListener{v -> mListener.onGetStampClick(adapterPosition)}
         }
     }

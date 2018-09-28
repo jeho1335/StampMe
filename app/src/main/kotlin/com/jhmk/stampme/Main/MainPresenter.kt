@@ -12,8 +12,10 @@ import com.jhmk.stampme.Module.DataBase.PreferencesManager
 import com.jhmk.stampme.R
 
 class MainPresenter(view: Main.view) : Main.presenter {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
     private val mView = view
+    private val FINISH_INTERVAL_TIME: Long = 2000
+    private var mBackPressedTime: Long = 0
 
     override fun requestLogin(user: User) {
         DataBaseReference.mUsersDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -99,9 +101,9 @@ class MainPresenter(view: Main.view) : Main.presenter {
         Log.d(TAG, "##### requestSelectTab #####")
         when (tabId) {
             ConstVariables.TAB_STAMPYOU -> {
-                if(user.userType == ConstVariables.USER_TYPE_BUYER){
-                 mView.onResultSelectTab(false, R.string.toast_cannot_buyer, tabId)
-                }else{
+                if (user.userType == ConstVariables.USER_TYPE_BUYER) {
+                    mView.onResultSelectTab(false, R.string.toast_cannot_buyer, tabId)
+                } else {
                     mView.onResultSelectTab(true, -1, tabId)
                 }
             }
@@ -113,5 +115,22 @@ class MainPresenter(view: Main.view) : Main.presenter {
                 mView.onResultSelectTab(true, -1, tabId)
             }
         }
+    }
+
+    override fun requestBackPressed() {
+        Log.d(TAG, "##### requestBackPressed #####")
+        val tempTime = System.currentTimeMillis()
+        val intervalTime = tempTime - mBackPressedTime
+        var result = false
+        var msg = -1;
+
+        if (intervalTime in 0..FINISH_INTERVAL_TIME) {
+            result = true
+
+        } else {
+            mBackPressedTime = tempTime
+            msg = R.string.toast_backkey
+        }
+        mView.onResultBackPressed(result, msg)
     }
 }

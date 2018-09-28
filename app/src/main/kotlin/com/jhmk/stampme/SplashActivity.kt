@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.jhmk.stampme.Main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
-    val TAG = this.javaClass.simpleName
+    private val TAG = this.javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

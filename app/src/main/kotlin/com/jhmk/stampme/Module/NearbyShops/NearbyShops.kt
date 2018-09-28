@@ -1,14 +1,15 @@
-package com.jhmk.stampme.Module.Home
+package com.jhmk.stampme.Module.NearbyShops
 
 import android.content.Context
 import com.jhmk.stampme.Model.Shops
+import com.jhmk.stampme.Module.Base.BasePresenter
 
-interface Home {
+interface NearbyShops {
     interface view {
         fun onResultAroundShopList(list: MutableList<Shops?>)
     }
 
-    interface presenter {
+    interface presenter{
         fun requestAroundShopList(context: Context)
     }
 }

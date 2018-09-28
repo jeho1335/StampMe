@@ -9,8 +9,8 @@ import com.jhmk.stampme.R
 import org.greenrobot.eventbus.EventBus
 
 class RegisterPresenter(view: Register.view) : Register.presenter {
-    val TAG = this.javaClass.simpleName
-    val mView = view
+    private val TAG = this.javaClass.simpleName
+    private val mView = view
 
     override fun requestNextStep(id: String, pw: String, confirmPw: String) {
         Log.d(TAG, "##### requestNextStep #####")
@@ -48,9 +48,13 @@ class RegisterPresenter(view: Register.view) : Register.presenter {
     override fun requestBackButton(view: View) {
         Log.d(TAG, "##### requestBackButton ##### ${view.visibility}")
         if(view.visibility == View.VISIBLE){
-            EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_SHOW_LOGIN))
+            requestBackstack()
         }else{
             view.visibility = View.VISIBLE
         }
+    }
+
+    override fun requestBackstack() {
+        super.requestBackstack()
     }
 }

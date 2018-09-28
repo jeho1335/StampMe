@@ -1,13 +1,13 @@
 package com.jhmk.stampme.Module.Login
 
 import android.util.Log
-import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.EventBusObject
+import com.jhmk.stampme.Model.User
 import org.greenrobot.eventbus.EventBus
 
-class LoginPresenter : Login.presenter {
-    val TAG = this.javaClass.simpleName
+class LoginPresenter :Login.presenter {
+    private val TAG = this.javaClass.simpleName
 
     override fun requestLogin(user : User) {
         Log.d(TAG, "##### requestLogin ##### id : ${user.userId} pw : ${user.userPw}")
