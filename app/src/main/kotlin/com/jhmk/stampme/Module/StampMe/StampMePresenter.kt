@@ -9,6 +9,7 @@ import com.jhmk.stampme.Model.*
 import com.jhmk.stampme.Module.DataBase.DataBaseReference
 import com.jhmk.stampme.Module.Utils.MakeBarcode
 import org.greenrobot.eventbus.EventBus
+import srjhlab.com.myownbarcode.Dialog.StampInfoDialog
 
 class StampMePresenter(view: StampMe.view) : StampMe.presenter {
     private val TAG = this.javaClass.simpleName
@@ -68,8 +69,8 @@ class StampMePresenter(view: StampMe.view) : StampMe.presenter {
                     Log.d(TAG, "##### getCurrentShopList ##### ${value?.stampSource}")
                     for (value in shopList.withIndex()) {
                         if (value.value!!.shopName == stampList[index]!!.stampSource) {
-                            myStampResultList.add(MyStamps(stampList[index]!!.stampSource, value.value!!.shopType, value.value!!.shopImageUrl, stampList[index]!!.stampReason, shopList[index]!!.shopAddress))
-                            Log.d(TAG, "##### getCurrentShopList ##### ${stampList[index]!!.stampSource}   ${shopList[index]!!.shopImageUrl} ")
+                            myStampResultList.add(MyStamps(stampList[index]!!.stampSource, value.value!!.shopType, value.value!!.shopImageUrl, stampList[index]!!.stampReason, value.value!!.shopAddress))
+                            Log.d(TAG, "##### getCurrentShopList ##### ${stampList[index]!!.stampSource}   ${value.value!!.shopImageUrl} ")
                         }
                     }
 
@@ -106,5 +107,10 @@ class StampMePresenter(view: StampMe.view) : StampMe.presenter {
     override fun requestSettings(user : User) {
         Log.d(TAG, "##### requestSettings #####")
         EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_SHOW_SETTINGS, user))
+    }
+
+    override fun requestLogout(user: User) {
+        Log.d(TAG, "##### requestLogout #####")
+        EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_REQUEST_LOGOUT, user as Any))
     }
 }

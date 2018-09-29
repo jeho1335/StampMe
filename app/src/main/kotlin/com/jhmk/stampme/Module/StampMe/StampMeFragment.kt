@@ -17,7 +17,11 @@ import com.jhmk.stampme.Module.Adapter.StampsRecyclerviewAdapter
 import com.jhmk.stampme.R
 import kotlinx.android.synthetic.main.layout_fragment_stampme.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.yesButton
 import srjhlab.com.myownbarcode.Dialog.BarcodeDialog
+import srjhlab.com.myownbarcode.Dialog.StampInfoDialog
 
 class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.IClickListener, View.OnClickListener {
     private val TAG = this.javaClass.simpleName
@@ -51,6 +55,7 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
     fun initializeUi() {
         Log.d(TAG, "##### initializeUi ##### userId : ${mCurrentUser.userId}")
         txt_title_toolbar.text = resources.getString(R.string.string_title_my_stamps)
+        txt_logout.setOnClickListener(this)
         img_info_barcode.setOnClickListener(this)
         img_back_toolbar.visibility = View.INVISIBLE
         img_edit_toolbar.visibility = View.VISIBLE
@@ -82,6 +87,12 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
                 , img_stamp_mart_stampme.id
                 , img_stamp_public_stampme.id
                 , img_stamp_etc_stampme.id -> setDetailCategory(v.id)
+            txt_logout.id -> {
+                activity!!.alert(resources.getString(R.string.alert_logout_title)) {
+                    yesButton { mPresenter.requestLogout(mCurrentUser) }
+                    noButton { }
+                }.show()
+            }
         }
     }
 
@@ -115,9 +126,9 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
             }
 
         }
-        if(list.size < 1){
+        if (list.size < 1) {
             txt_category_load_fail.visibility = View.VISIBLE
-        }else{
+        } else {
             txt_category_load_fail.visibility = View.GONE
         }
         list_category_detail.adapter = StampsRecyclerviewAdapter(activity as Context, list, null)
@@ -126,8 +137,14 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
         SimpleViewFadeAnimation().startAnimation(layout_detail_category_front, layout_detail_category_back)
     }
 
-    override fun onItemClick(id: Int) {
+    override fun onItemClick(stamp: MyStamps?) {
         Log.d(TAG, "##### onItemClick #####")
+        if (stamp == null) {
+            return
+        }
+        StampInfoDialog()
+                .setItem(stamp)
+                .show(fragmentManager, this.javaClass.simpleName)
     }
 
     override fun onResultMakeBarcode(user: User, bitmap: Bitmap?) {

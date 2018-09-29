@@ -13,6 +13,9 @@ object ConstVariables {
     val EVENTBUS_SHOW_REGISTER = 104
     val EVENTBUS_SHOW_SETTINGS = 105
     val EVENTBUS_POP_BACKSTACK = 106
+    val EVENTBUS_SEND_CURRENT_STORE = 107
+    val EVENTBUS_SUCCESS_SUBMIT = 108
+    val EVENTBUS_FAILED_SUBMIT = 109
 
     /* Handle Fragment Key*/
     val SHOW_FRAGMENT_LOGIN = 200
@@ -36,4 +39,9 @@ object ConstVariables {
     val TAB_STAMPYOU = 0
     val TAB_HOME = 1
     val TAB_STAMPME = 2
+
+    /* Dialog Type*/
+    val DIALOG_TYPE_BARCODE = 1
+    val DIALOG_TYPE_SUBMIT_SUCCESS = 2
+    val DIALOG_TYPE_SUBMIT_FAILED = 3
 }

@@ -1,21 +1,25 @@
 package com.jhmk.stampme.Main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import com.google.gson.Gson
+import com.google.zxing.integration.android.IntentIntegrator
 import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.EventBusObject
+import com.jhmk.stampme.Model.Shops
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
 import com.jhmk.stampme.Module.Login.LoginFragment
+import com.jhmk.stampme.Module.StampYou.StampYouFragment
 import com.jhmk.stampme.Module.NearbyShops.NearbyShopsFragment
 import com.jhmk.stampme.Module.Register.RegisterFragment
 import com.jhmk.stampme.Module.Settings.SettingsFragment
 import com.jhmk.stampme.Module.StampMe.StampMeFragment
 import com.jhmk.stampme.R
-import com.jhmk.stampme.R.id.*
 import org.greenrobot.eventbus.EventBus
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
     private lateinit var mPresenter: MainPresenter
     private lateinit var mContentView: View
     private lateinit var mCurrentUser: User
+    private lateinit var mCurrentStore : Shops
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, "##### onCreate #####")
@@ -68,13 +73,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         toast(resources.getString(msg))
         if (result) {
             mCurrentUser = user
-            mPresenter.requestSaveUserInfo(this, user)
-            if (user.userType == ConstVariables.USER_TYPE_BUYER) {
-                handleFragment(img_home_main_tab.id, user)
-            } else if (user.userType == ConstVariables.USER_TYPE_SELLER) {
+            mPresenter.requestSaveUserInfo(this, mCurrentUser)
+            if (mCurrentUser.userType == ConstVariables.USER_TYPE_BUYER) {
+                handleFragment(img_home_main_tab.id, mCurrentUser)
+            } else if (mCurrentUser.userType == ConstVariables.USER_TYPE_SELLER) {
+                handleFragment(img_stampyou_main_tab.id, mCurrentUser)
             }
         } else {
-            handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, user)
+            handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, mCurrentUser)
         }
     }
 
@@ -84,13 +90,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
         toast(resources.getString(msg))
         if (result) {
             mCurrentUser = user
-            mPresenter.requestSaveUserInfo(this, user)
-            if (user.userType == ConstVariables.USER_TYPE_BUYER) {
-                handleFragment(img_home_main_tab.id, user)
-            } else if (user.userType == ConstVariables.USER_TYPE_SELLER) {
+            mPresenter.requestSaveUserInfo(this, mCurrentUser)
+            if (mCurrentUser.userType == ConstVariables.USER_TYPE_BUYER) {
+                handleFragment(img_home_main_tab.id, mCurrentUser)
+            } else if (mCurrentUser.userType == ConstVariables.USER_TYPE_SELLER) {
+                handleFragment(img_stampyou_main_tab.id, mCurrentUser)
             }
         } else {
-            handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, user)
+            handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, mCurrentUser)
         }
     }
 
@@ -116,8 +123,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
                     return
                 }
             }
-            ConstVariables.TAB_HOME -> id = img_home_main_tab.id
-            ConstVariables.TAB_STAMPME -> id = img_stampme_main_tab.id
+            ConstVariables.TAB_HOME -> {
+                if (result) {
+                    id = img_home_main_tab.id
+                } else {
+                    toast(resources.getString(msg))
+                    return
+                }
+            }
+            ConstVariables.TAB_STAMPME -> {
+                if (result) {
+                    id = img_stampme_main_tab.id
+                } else {
+                    toast(resources.getString(msg))
+                    return
+                }
+            }
         }
 
         try {
@@ -129,10 +150,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
 
     override fun onResultBackPressed(result: Boolean, msg: Int) {
         Log.d(TAG, "##### onResultBackPressed #####")
-        if(result){
+        if (result) {
             this.finish()
-        }else{
+        } else {
             toast(resources.getString(msg))
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.d(TAG, "##### onActivityResult #####")
+        super.onActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        when (result.formatName) {
+            null -> return
+            "QR_CODE" -> mPresenter.requestProcessingScanResult(mCurrentStore, result.contents)
+            else -> return
         }
     }
 
@@ -181,6 +213,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
                 img_stampyou_main_tab.isSelected = true
                 img_stampme_main_tab.isSelected = false
                 img_home_main_tab.isSelected = false
+
+                fr = StampYouFragment()
+
+                if (user != null) {
+                    val bundle = Bundle()
+                    bundle.putSerializable("UserItem", user)
+                    fr.arguments = bundle
+                }
 
             }
             img_home_main_tab.id -> {
@@ -235,6 +275,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Main.view {
             ConstVariables.EVENTBUS_SHOW_LOGIN -> handleFragment(ConstVariables.SHOW_FRAGMENT_LOGIN, null)
             ConstVariables.EVENTBUS_SHOW_SETTINGS -> handleFragment(ConstVariables.SHOW_FRAGMENT_SETTINGS, obj.val1 as User)
             ConstVariables.EVENTBUS_POP_BACKSTACK -> handleFragment(ConstVariables.FRAGMENT_BACKSTACK, null)
+            ConstVariables.EVENTBUS_SEND_CURRENT_STORE -> mCurrentStore = obj.val1 as Shops
         }
     }
 

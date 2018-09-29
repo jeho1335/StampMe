@@ -11,7 +11,7 @@ interface Register {
     }
     interface presenter : BasePresenter.requestBackstack{
         fun requestNextStep(id : String, pw : String, confirmPw : String)
-        fun requestCreateAccount(fullname : String, phoneNumber : String, location : String)
+        fun requestCreateAccount(fullname : String, phoneNumber : String, isSeller : Boolean, store : String)
         fun requestFinishRegister(user : User)
         fun requestBackButton(view : View)
     }

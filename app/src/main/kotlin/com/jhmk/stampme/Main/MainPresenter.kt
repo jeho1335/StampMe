@@ -5,11 +5,18 @@ import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
 import com.jhmk.stampme.Model.ConstVariables
+import com.jhmk.stampme.Model.EventBusObject
+import com.jhmk.stampme.Model.Shops
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.DataBase.DataBaseReference
 import com.jhmk.stampme.Module.DataBase.PreferencesManager
 import com.jhmk.stampme.R
+import org.greenrobot.eventbus.EventBus
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainPresenter(view: Main.view) : Main.presenter {
     private val TAG = this.javaClass.simpleName
@@ -78,7 +85,7 @@ class MainPresenter(view: Main.view) : Main.presenter {
                 DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userPw").setValue(user.userPw)
                 DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userName").setValue(user.userName)
                 DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userPhoneNumber").setValue(user.userPhoneNumber)
-                DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userLocation").setValue(user.userLocation)
+                DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userStoreName").setValue(user.userStoreName)
                 DataBaseReference.mUsersDatabaseReference.child(user.userId).child("userType").setValue(user.userType)
                 mView.onResultRegister(true, R.string.toast_register_success, user)
                 DataBaseReference.mUsersDatabaseReference.removeEventListener(this)
@@ -108,13 +115,54 @@ class MainPresenter(view: Main.view) : Main.presenter {
                 }
             }
             ConstVariables.TAB_HOME -> {
-                mView.onResultSelectTab(true, -1, tabId)
-
+                if (user.userType == ConstVariables.USER_TYPE_SELLER) {
+                    mView.onResultSelectTab(false, R.string.toast_cannot_seller, tabId)
+                } else {
+                    mView.onResultSelectTab(true, -1, tabId)
+                }
             }
             ConstVariables.TAB_STAMPME -> {
-                mView.onResultSelectTab(true, -1, tabId)
+                if (user.userType == ConstVariables.USER_TYPE_SELLER) {
+                    mView.onResultSelectTab(false, R.string.toast_cannot_seller, tabId)
+                } else {
+                    mView.onResultSelectTab(true, -1, tabId)
+                }
             }
         }
+    }
+
+    override fun requestProcessingScanResult(store: Shops, result: String) {
+        Log.d(TAG, "##### requestProcessingScanResult #####")
+        val gson = Gson()
+        val user: User
+        try {
+            user = gson.fromJson(result, User().javaClass)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_FAILED_SUBMIT))
+            return
+        }
+
+        DataBaseReference.mStampsDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+                Log.d(TAG, "##### requestProcessingScanResult ##### onCancelled")
+                DataBaseReference.mStampsDatabaseReference.removeEventListener(this)
+                EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_FAILED_SUBMIT))
+            }
+
+            override fun onDataChange(dataSnapShot: DataSnapshot) {
+                Log.d(TAG, "##### requestProcessingScanResult ##### onDataChange")
+                val curTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime())
+                DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampDate").setValue(curTime)
+                DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampReason").setValue(store.shopTargetBehavior)
+                DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampSource").setValue(store.shopName)
+                DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampTargetUser").setValue(user.userId)
+                DataBaseReference.mStampsDatabaseReference.removeEventListener(this)
+                EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_SUCCESS_SUBMIT))
+            }
+        })
+
+
     }
 
     override fun requestBackPressed() {

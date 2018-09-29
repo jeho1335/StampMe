@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import com.jhmk.stampme.Model.ConstVariables
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.Dialog.Barcode
 import com.jhmk.stampme.Module.Dialog.BarcodeDialogPresenter
@@ -18,6 +19,7 @@ class BarcodeDialog : android.support.v4.app.DialogFragment(), Barcode.view {
     private val TAG = this.javaClass.simpleName
     private lateinit var mPresenter : BarcodeDialogPresenter
     private lateinit var mUser: User
+    private var mDialogType = ConstVariables.DIALOG_TYPE_BARCODE
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         Log.d(TAG, "##### onCreateView #####")
@@ -40,9 +42,22 @@ class BarcodeDialog : android.support.v4.app.DialogFragment(), Barcode.view {
         return this
     }
 
+    fun setType(type : Int) : BarcodeDialog{
+        Log.d(TAG, "##### setType #####")
+        mDialogType = type
+
+        return this
+    }
+
     private fun initializeUi() {
         Log.d(TAG, "##### initializeUi #####")
-        mPresenter.requestMakeBarcode(mUser)
+        if(mDialogType == ConstVariables.DIALOG_TYPE_BARCODE) {
+            mPresenter.requestMakeBarcode(mUser)
+        }else if(mDialogType == ConstVariables.DIALOG_TYPE_SUBMIT_SUCCESS){
+            img_barcode.background = activity!!.resources.getDrawable(R.drawable.img_stamp)
+        }else if(mDialogType == ConstVariables.DIALOG_TYPE_SUBMIT_FAILED){
+            img_barcode.background = activity!!.resources.getDrawable(R.drawable.img_nostamp)
+        }
     }
 
     override fun onResultMakeBarcode(user: User, bitmap: Bitmap?) {

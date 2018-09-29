@@ -21,10 +21,10 @@ class StampsRecyclerviewAdapter(context: Context, items: MutableList<MyStamps?>,
     private var mItems: MutableList<MyStamps?> = items
     private var mListener: IClickListener? = listener
     private val mContext = context
-    private lateinit var mGlideOption : RequestOptions
+    private lateinit var mGlideOption: RequestOptions
 
     interface IClickListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(stamp: MyStamps?)
     }
 
     @SuppressLint("CheckResult")
@@ -54,7 +54,9 @@ class StampsRecyclerviewAdapter(context: Context, items: MutableList<MyStamps?>,
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.layout_my_stamps.setOnClickListener { v -> mListener!!.onItemClick(adapterPosition)}
+            if (mListener != null) {
+                itemView.layout_my_stamps.setOnClickListener { v -> mListener!!.onItemClick(mItems[adapterPosition]) }
+            }
         }
     }
 }

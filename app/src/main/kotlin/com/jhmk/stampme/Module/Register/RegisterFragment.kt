@@ -17,7 +17,7 @@ import org.jetbrains.anko.toast
 class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
     private val TAG = this.javaClass.simpleName
     private lateinit var mPresenter: RegisterPresenter
-    private var mUserType = -1;
+    private var mUserType = ConstVariables.USER_TYPE_BUYER
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d(TAG, "##### onCreateView @#####")
@@ -39,7 +39,7 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
         img_register_start.setOnClickListener(this)
         img_register_select_buyer.setOnClickListener(this)
         img_register_select_seller.setOnClickListener(this)
-        img_register_select_seller.setBackgroundResource(R.drawable.btn_seller_n_2)
+        img_register_select_buyer.isSelected = true
     }
 
     override fun onResultNextStep(flag: Boolean, msg: Int) {
@@ -61,7 +61,7 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
                             , edtxt_register_pw.text.toString()
                             , edtxt_register_fullname.text.toString()
                             , edtxt_register_fullname.text.toString()
-                            , edtxt_register_location.text.toString()
+                            , edtxt_register_store.text.toString()
                             , mUserType))
         } else {
             activity?.toast(resources.getString(msg))
@@ -79,18 +79,22 @@ class RegisterFragment : Fragment(), Register.view, View.OnClickListener {
                 mPresenter.requestNextStep(edtxt_register_id.text.toString(), edtxt_register_pw.text.toString(), edtxt_register_confirm_pw.text.toString())
             }
             img_register_start.id -> {
-                mPresenter.requestCreateAccount(edtxt_register_fullname.text.toString(), edtxt_register_phonenumber.text.toString(), edtxt_register_location.text.toString())
+                mPresenter.requestCreateAccount(edtxt_register_fullname.text.toString(), edtxt_register_phonenumber.text.toString(), img_register_select_seller.isSelected, edtxt_register_store.text.toString())
             }
             img_register_select_seller.id -> {
                 mUserType = ConstVariables.USER_TYPE_SELLER
-                img_register_select_seller.setBackgroundResource(R.drawable.btn_seller_n_2)
-                img_register_select_buyer.setBackgroundResource(R.drawable.selector_buyer_btn)
+                img_register_select_seller.isSelected = true
+                img_register_select_buyer.isSelected = false
+                view_register_store.visibility = View.VISIBLE
+                edtxt_register_store.visibility = View.VISIBLE
 
             }
             img_register_select_buyer.id -> {
                 mUserType = ConstVariables.USER_TYPE_BUYER
-                img_register_select_buyer.setBackgroundResource(R.drawable.btn_buyer_p)
-                img_register_select_seller.setBackgroundResource(R.drawable.selector_seller_btn)
+                img_register_select_buyer.isSelected = true
+                img_register_select_seller.isSelected = false
+                view_register_store.visibility = View.GONE
+                edtxt_register_store.visibility = View.GONE
             }
         }
     }

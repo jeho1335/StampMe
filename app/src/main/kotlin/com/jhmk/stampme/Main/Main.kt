@@ -1,6 +1,7 @@
 package com.jhmk.stampme.Main
 
 import android.content.Context
+import com.jhmk.stampme.Model.Shops
 import com.jhmk.stampme.Model.User
 
 interface Main {
@@ -18,5 +19,6 @@ interface Main {
         fun requestDeleteUserInfo(context : Context, user : User)
         fun requestSelectTab(user : User, tabId : Int)
         fun requestBackPressed()
+        fun requestProcessingScanResult(store : Shops, result : String)
     }
 }

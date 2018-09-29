@@ -7,7 +7,7 @@ open class User : Serializable {
     var userPw = ""
     var userName = ""
     var userPhoneNumber = ""
-    var userLocation = ""
+    var userStoreName = ""
     var userType = -1
 
     constructor()
@@ -22,7 +22,7 @@ open class User : Serializable {
         this.userPw = userPW
         this.userName = userName
         this.userPhoneNumber = userEmail
-        this.userLocation = userLocation
+        this.userStoreName = userLocation
         this.userType = userType
     }
 

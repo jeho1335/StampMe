@@ -154,24 +154,27 @@
             android:textStyle="bold" />
 
         <View
+            android:id="@+id/view_register_store"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="30" />
+            android:layout_weight="30"
+            android:visibility="gone"/>
 
         <EditText
-            android:id="@+id/edtxt_register_location"
+            android:id="@+id/edtxt_register_store"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/rect_outline"
-            android:hint="@string/string_edtxt_hint_location"
+            android:hint="@string/string_edtxt_hint_store"
             android:paddingBottom="14dp"
             android:paddingEnd="14dp"
             android:paddingStart="14dp"
             android:paddingTop="14dp"
             android:singleLine="true"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"

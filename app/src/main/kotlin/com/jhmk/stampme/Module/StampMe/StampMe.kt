@@ -2,6 +2,7 @@ package com.jhmk.stampme.Module.StampMe
 
 import android.graphics.Bitmap
 import com.jhmk.stampme.Model.MyStamps
+import com.jhmk.stampme.Model.Stamps
 import com.jhmk.stampme.Model.User
 import com.jhmk.stampme.Module.Base.BasePresenter
 
@@ -16,5 +17,6 @@ interface StampMe {
         fun requestGetMyStamp(user : User)
         fun requestSeperateMyStamp(myStampList : MutableList<MyStamps?>)
         fun requestSettings(user : User)
+        fun requestLogout(user : User)
     }
 }
