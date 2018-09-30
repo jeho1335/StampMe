@@ -41,7 +41,7 @@
         android:layout_toEndOf="@+id/txt_my_stamps"
         android:paddingEnd="12dp"
         android:textColor="@color/color_text"
-        android:textSize="13sp"
+        android:textSize="11sp"
         tools:text="2018-20-20"
         tools:ignore="RtlSymmetry" />
 

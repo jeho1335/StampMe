@@ -98,6 +98,7 @@ class StampYouFragment : Fragment(), StampYou.view, View.OnClickListener {
 
     @Subscribe
     fun onEvent(obj: EventBusObject) {
+        Log.d(TAG, "##### onEvent #####")
         when (obj.key) {
             ConstVariables.EVENTBUS_SUCCESS_SUBMIT -> {
                 BarcodeDialog()

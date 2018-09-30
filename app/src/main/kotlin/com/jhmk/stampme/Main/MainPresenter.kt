@@ -147,12 +147,11 @@ class MainPresenter(view: Main.view) : Main.presenter {
             override fun onCancelled(p0: DatabaseError?) {
                 Log.d(TAG, "##### requestProcessingScanResult ##### onCancelled")
                 DataBaseReference.mStampsDatabaseReference.removeEventListener(this)
-                EventBus.getDefault().post(EventBusObject(ConstVariables.EVENTBUS_FAILED_SUBMIT))
             }
 
             override fun onDataChange(dataSnapShot: DataSnapshot) {
                 Log.d(TAG, "##### requestProcessingScanResult ##### onDataChange")
-                val curTime = SimpleDateFormat("yyyy-MM-dd-hh-mm-ss").format(Calendar.getInstance().getTime())
+                val curTime = SimpleDateFormat("yyyy-MM-dd-hh:mm:ss").format(Calendar.getInstance().getTime())
                 DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampDate").setValue(curTime)
                 DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampReason").setValue(store.shopTargetBehavior)
                 DataBaseReference.mStampsDatabaseReference.child(user.userId).child(curTime).child("stampSource").setValue(store.shopName)
