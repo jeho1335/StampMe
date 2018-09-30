@@ -45,6 +45,7 @@ class StampsRecyclerviewAdapter(context: Context, items: MutableList<MyStamps?>,
                 .apply(mGlideOption)
                 .into(holder.itemView.img_my_stamps)
         holder.itemView.txt_my_stamps.text = item.stampsSource
+        holder.itemView.txt_date_my_Stamps.text = item.stampDate
 
     }
 

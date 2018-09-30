@@ -58,7 +58,7 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
         txt_logout.setOnClickListener(this)
         img_info_barcode.setOnClickListener(this)
         img_back_toolbar.visibility = View.INVISIBLE
-        img_edit_toolbar.visibility = View.VISIBLE
+        img_edit_toolbar.visibility = View.GONE
         img_edit_toolbar.setOnClickListener(this)
         img_stamp_cafe_stampme.setOnClickListener(this)
         img_stamp_restaurant_stampme.setOnClickListener(this)
@@ -158,6 +158,7 @@ class StampMeFragment : Fragment(), StampMe.view, StampsRecyclerviewAdapter.ICli
     override fun onResultGetMyStamp(resultList: MutableList<MyStamps?>?) {
         Log.d(TAG, "##### onResultGetMyStamp #####")
         if (resultList != null) {
+            resultList.reverse()
             mPresenter.requestSeperateMyStamp(resultList)
             Log.d(TAG, "##### onResultGetMyStamp list size : ${resultList.size}#####")
             if (activity != null) {

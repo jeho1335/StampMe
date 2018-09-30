@@ -10,7 +10,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.jhmk.stampme"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -25,7 +25,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin/'
     }
 }
-repositories{
+repositories {
     mavenCentral()
     google()
 }
@@ -43,6 +43,9 @@ dependencies {
     implementation 'org.jetbrains.anko:anko-commons:0.10.2'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.journeyapps:zxing-android-embedded:2.3.0'
+    implementation 'com.journeyapps:zxing-android-legacy:2.3.0@aar'
+    implementation 'com.journeyapps:zxing-android-integration:2.3.0@aar'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'gun0912.ted:tedpermission:2.2.2'
     implementation 'com.github.bumptech.glide:glide:4.8.0'

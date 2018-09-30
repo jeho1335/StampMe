@@ -19,13 +19,30 @@
 
     <TextView
         android:id="@+id/txt_my_stamps"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/img_my_stamps"
-        android:paddingLeft="12dp"
+        android:singleLine="true"
+        android:paddingStart="12dp"
         android:textColor="@color/color_shops_name"
         android:textSize="13sp"
-        tools:text="스타벅스 연대점" />
+        tools:text="스타벅스 연대점"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/txt_date_my_Stamps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:singleLine="true"
+        android:gravity="end"
+        android:layout_toEndOf="@+id/txt_my_stamps"
+        android:paddingEnd="12dp"
+        android:textColor="@color/color_text"
+        android:textSize="13sp"
+        tools:text="2018-20-20"
+        tools:ignore="RtlSymmetry" />
 
 </RelativeLayout>

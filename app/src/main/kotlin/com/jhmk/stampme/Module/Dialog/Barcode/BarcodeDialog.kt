@@ -1,5 +1,6 @@
 package srjhlab.com.myownbarcode.Dialog
 
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -34,6 +35,11 @@ class BarcodeDialog : android.support.v4.app.DialogFragment(), Barcode.view {
         super.onActivityCreated(savedInstanceState)
         mPresenter = BarcodeDialogPresenter(this)
         initializeUi()
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        Log.d(TAG, "##### onDismiss #####")
+        super.onDismiss(dialog)
     }
 
     fun setUser(user: User): BarcodeDialog {

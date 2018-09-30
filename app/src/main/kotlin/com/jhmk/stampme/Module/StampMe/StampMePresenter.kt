@@ -69,7 +69,7 @@ class StampMePresenter(view: StampMe.view) : StampMe.presenter {
                     Log.d(TAG, "##### getCurrentShopList ##### ${value?.stampSource}")
                     for (value in shopList.withIndex()) {
                         if (value.value!!.shopName == stampList[index]!!.stampSource) {
-                            myStampResultList.add(MyStamps(stampList[index]!!.stampSource, value.value!!.shopType, value.value!!.shopImageUrl, stampList[index]!!.stampReason, value.value!!.shopAddress))
+                            myStampResultList.add(MyStamps(stampList[index]!!.stampSource, value.value!!.shopType, value.value!!.shopImageUrl, stampList[index]!!.stampReason, value.value!!.shopAddress, stampList[index]!!.stampDate))
                             Log.d(TAG, "##### getCurrentShopList ##### ${stampList[index]!!.stampSource}   ${value.value!!.shopImageUrl} ")
                         }
                     }

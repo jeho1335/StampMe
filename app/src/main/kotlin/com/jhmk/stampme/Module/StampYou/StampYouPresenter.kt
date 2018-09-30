@@ -3,6 +3,7 @@ package com.jhmk.stampme.Module.StampYou
 import android.Manifest
 import android.app.Activity
 import android.content.pm.ActivityInfo
+import android.util.DisplayMetrics
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -54,7 +55,6 @@ class StampYouPresenter(view: StampYou.view) : StampYou.presenter {
             override fun onPermissionGranted() {
                 val integrator = IntentIntegrator(activity)
                 integrator.setOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-//                integrator.addExtra("PROMPT_MESSAGE", store.shopName)
                 integrator.initiateScan()
             }
 

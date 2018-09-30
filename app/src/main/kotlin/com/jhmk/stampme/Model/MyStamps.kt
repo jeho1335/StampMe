@@ -6,12 +6,14 @@ class MyStamps {
     var stampSourceImageUrl = ""
     var stampReason = ""
     var stampAddress = ""
+    var stampDate = ""
 
-    constructor(stampSource: String, stampSourceType: String, stampSourceImageUrl: String, stampReason: String, stampAddress: String) {
+    constructor(stampSource: String, stampSourceType: String, stampSourceImageUrl: String, stampReason: String, stampAddress: String, stampDate : String) {
         this.stampsSource = stampSource
         this.stampSourceType = stampSourceType
         this.stampSourceImageUrl = stampSourceImageUrl
         this.stampReason = stampReason
         this.stampAddress = stampAddress
+        this.stampDate = stampDate
     }
 }

@@ -1,4 +1,4 @@
-package com.jhmk.stampme
+package com.jhmk.stampme.Module.Splash
 
 import android.content.Intent
 import android.os.Bundle
